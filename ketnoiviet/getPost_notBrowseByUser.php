@@ -1,13 +1,9 @@
 <?php 
-  // nhận các bài đăng chưa được duyệt theo sdt người dùng 
 	include "connect.php";
-	// nhận số điện thoại người dùng được gửi
 	$phoneuser = $_POST['phoneuser'];
-	// lấy các bài đăng của 1 user đang ở trạng thái chưa được duyệt và sắp xếp giảm dần theo id của post
 	$query = "SELECT post.id,post.nameplace,post.province,post.district,post.ward,post.address,post.description,post.content,post.image1,post.image2,post.image3,post.image4,post.phoneuser,post.datepost,post.status, users.nameuser,users.imageuser FROM post,users WHERE post.phoneuser = users.phonenumber && post.status = 0 && users.phonenumber = '$phoneuser' ORDER By ID DESC";
 	
 	$data = mysqli_query($conn, $query);
-	// tạo 1 mảng để chứa các dữ liệu vừa truy vấn được
 	$mangPost = array();
 	while ($row = mysqli_fetch_assoc($data)) {
 		array_push($mangPost, new post(

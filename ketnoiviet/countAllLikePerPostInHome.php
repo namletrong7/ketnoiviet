@@ -1,5 +1,4 @@
 <?php 
-//đếm tất cả lượt thích mỗi bài đăng trong trang chủ
 	include "connect.php";
 	//$idpost = $_POST['idpost'];
 

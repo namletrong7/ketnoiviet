@@ -1,7 +1,5 @@
 <?php 
-     
 	include "connect.php";
-	// nhận dữ liệu được gửi
 	$users = $_POST['users'];
 	$userfollow	= $_POST['userfollow'];
 

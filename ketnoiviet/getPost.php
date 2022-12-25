@@ -1,11 +1,9 @@
 <?php 
-// các bài đăng đã được phê duyệt
 	include "connect.php";
 
 	$query = "SELECT post.id,post.nameplace,post.province,post.district,post.ward,post.address,post.description,post.content,post.image1,post.image2,post.image3,post.image4,post.phoneuser,post.datepost,post.status, users.nameuser,users.imageuser FROM post,users WHERE post.phoneuser = users.phonenumber && post.status = 1 ORDER By ID DESC";
 	
 	$data = mysqli_query($conn, $query);
-	// lấy các bài đăng đưa vào 1 mảng
 	$mangPost = array();
 	while ($row = mysqli_fetch_assoc($data)) {
 		array_push($mangPost, new post(
