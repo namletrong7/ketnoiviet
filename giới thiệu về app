@@ -2,4 +2,10 @@ Giới thiệu về app :
 App có khả năng cho phép người dùng đăng các bài đăng giói thiệu về cảnh quan du lịch và địa điểm du lịch nổi tiếng tại 63 tỉnh thành Việt Nam, cho phép người dùng 
 có thể bình luận , like bài viết của nhau. Cho phép theo dõi cũng như nhắn tin liên lạc với nhau . 
 App sử dụng php MYSQL để làm backend song song với đó sử dụng fireBase để thực hiện chức năng xác thức số điện thoại thông qua mã OTP và chức năng nhắn tin với nhau
+Cách thức chạy app : 
+1 . Cài ứng dụng xampp
+2. Sau khi cài xampp, kích hoạt dịch vụ apache và mysql vào trang phpmyAdmin
+3. tạo 1 DB tên ketnoiviet 
+4. import file ketnoiviet.sql vào trong db ketnoiviet mà bạn vừa tạo 
+5. vào trong thư mục ketnoiviet(htdocs) copy toàn bộ nội dung trong thư mục vào folder htdocs trên máy tính của bạn
 
