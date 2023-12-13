@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="activity_horizontal_margin">200dp</dimen>
+    <declare-styleable name="customTextView">
+        <attr name="fontFamily" format="string" />
+    </declare-styleable>
+</resources>

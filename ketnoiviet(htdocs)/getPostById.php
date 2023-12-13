@@ -2,6 +2,7 @@
 	include "connect.php";
 
 	$id_post = $_POST['idpost'];
+     //  $id_post = '1';
 
 	$query = "SELECT post.id,post.nameplace,post.province,post.district,post.ward,post.address,post.description,post.content,post.image1,post.image2,post.image3,post.image4,post.phoneuser,post.datepost,post.status, users.nameuser,users.imageuser FROM post,users WHERE post.phoneuser = users.phonenumber && post.id = '$id_post'";
 	

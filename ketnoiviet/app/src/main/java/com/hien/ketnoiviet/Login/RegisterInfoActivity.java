@@ -29,7 +29,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hien.ketnoiviet.R;
+import com.hien.ketnoiviet.model.User;
 import com.hien.ketnoiviet.ultil.CheckConnection;
 import com.hien.ketnoiviet.ultil.Server;
 import com.hien.ketnoiviet.ultil.networkChangeListener;
@@ -44,12 +47,15 @@ public class RegisterInfoActivity extends AppCompatActivity {
     Button confirm_register_info, cancel_register;
     EditText name_register_info,password_register_info,password_again_register_info;
     TextView term_privacy_register, password_request_register;
-
+    FirebaseDatabase database;
+    DatabaseReference reference;
     private Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_info);
+        database = FirebaseDatabase.getInstance();
+        reference= FirebaseDatabase.getInstance().getReference();
         viewbinding();
 
         if (CheckConnection.haveNetworkConnection(getApplicationContext())){
@@ -146,6 +152,15 @@ public class RegisterInfoActivity extends AppCompatActivity {
         Format f = new SimpleDateFormat("dd/MM/yyyy");
         String datecreate = f.format(new Date());
         String password = password_register_info.getText().toString().trim();
+       ;
+
+        // đưa user mới đăng ký fireBase
+
+
+        // đảy dữ liệu len fire base
+        User user= new User(0,nameuser,"","","","",phonenumber_user,"","",0,"",password,"");
+       reference.child("User").child(phonenumber).setValue(user);
+
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.register, response -> {

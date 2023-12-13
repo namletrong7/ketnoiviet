@@ -100,7 +100,6 @@
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/custom_edittext_border_left"
                         android:hint="Nhập nội dung"
-
                         android:importantForAutofill="noExcludeDescendants"
                         android:inputType="phone"
                         android:maxHeight="44dp"
@@ -109,7 +108,6 @@
                         android:padding="8dp"
                         android:paddingLeft="16dp"
                         android:scrollbars="horizontal"
-
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textColorHint="@color/text_color_hint"
@@ -160,7 +158,6 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginBottom="8dp"
-
                         android:background="@drawable/custom_edittext_border_left"
                         android:hint="Nhập mật khẩu"
                         android:inputType="textPassword"

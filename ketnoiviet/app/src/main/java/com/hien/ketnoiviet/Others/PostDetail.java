@@ -88,18 +88,18 @@ public class PostDetail extends AppCompatActivity {
     public RecyclerViewAdapterComment recyclerViewAdapterComment;
     public ArrayList<String> mImageUrls1;
     public RecyclerView recyclerView1;
+    public Boolean isAddCarePost = false ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
+        isAddCarePost = false ;
         Intent intent = this.getIntent();  // lấy id của bài post được truyền từ RecyclerViewAdapterPost
         id = intent.getIntExtra("idpost", -1);
         AnhXa(); // thuc hiện ánh xạ
         arrayComment = new ArrayList<>();
         comment_post_detail_edt.clearFocus();
-
 
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL, false);
         recyclerView1 = findViewById(R.id.recyclerviewDetail);
@@ -109,9 +109,9 @@ public class PostDetail extends AppCompatActivity {
 
         getData();
         getStatus();
-        getTotalLike();
-        getTotalComment();
-        GetDataComment();
+        getTotalLike(); // lấy số lượt like
+        getTotalComment();  // láy comment
+        GetDataComment();  // lấy dữ liệu về comment
 
         commentAdapter = new CommentAdapter(arrayComment, this);
 
@@ -199,6 +199,11 @@ public class PostDetail extends AppCompatActivity {
                         }
                     };
                     requestQueue.add(request);
+                    if(isAddCarePost==false){
+                        addCarePost();
+                        isAddCarePost=true ;
+                    }
+                    addNotifi(String.valueOf(0));
                 }
             }
         });
@@ -231,7 +236,7 @@ public class PostDetail extends AppCompatActivity {
         findViewById(R.id.directions_post_detail).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri gmmIntentUri = Uri.parse("geo:13.771297, 109.291292");
+                Uri gmmIntentUri = Uri.parse("geo:20.9808114, 105.7940344");
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 if (mapIntent.resolveActivity(getPackageManager()) != null) {
@@ -253,38 +258,7 @@ public class PostDetail extends AppCompatActivity {
             }
 
         });
-//        img1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), imgFitScreen.class);
-//                intent.putExtra("url1", Server.imagesget + image1);
-//                startActivity(intent);
-//            }
-//        });
-//        img2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), imgFitScreen.class);
-//                intent.putExtra("url2", Server.imagesget + image2);
-//                startActivity(intent);
-//            }
-//        });
-//        img3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), imgFitScreen.class);
-//                intent.putExtra("url3", Server.imagesget + image3);
-//                startActivity(intent);
-//            }
-//        });
-//        img4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), imgFitScreen.class);
-//                intent.putExtra("url4", Server.imagesget + image4);
-//                startActivity(intent);
-//            }
-//        });
+
     }
 
     private void GetDataComment() {
@@ -331,12 +305,11 @@ public class PostDetail extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
-    private void getTotalComment() {
+    private void getTotalComment() {  //lấy số lượng bình luận của bài
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getComment, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-//                Toast.makeText(getApplicationContext(), "" + response, Toast.LENGTH_SHORT).show();
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     totalcomment = jsonArray.length();
@@ -362,18 +335,19 @@ public class PostDetail extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
-    private void addheart() {
+    private void addheart() { // like bài viết
+        addNotifi(String.valueOf(1));
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.POST, Server.addreact
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-//                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(getApplicationContext(), "Lỗi" + error.getMessage(), Toast.LENGTH_LONG).show();
+
                 Show_SnackBar(R.drawable.icon_toast_warning, "Lỗi!", "Đóng");
             }
         }) {
@@ -387,7 +361,7 @@ public class PostDetail extends AppCompatActivity {
         };
         requestQueue.add(request);
     }
-    private void getTotalLike() {
+    private void getTotalLike() { // lấy só lượng lượt like của bài
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getTotalLike, new Response.Listener<String>() {
             @Override
@@ -421,7 +395,7 @@ public class PostDetail extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
-    private void getStatus() {
+    private void getStatus() {// check xem đã like bài viết chưa
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.POST, Server.getStatusReact
                 , new Response.Listener<String>() {
@@ -559,6 +533,60 @@ public class PostDetail extends AppCompatActivity {
         haylanguoithichdautien = findViewById(R.id.haylanguoithichdautien);
         haylanguoithichdautien.setVisibility(View.GONE);
     }
+    private void addCarePost(){  // tthêm bài viết vào diện mik quan tâm
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.POST, Server.addCarePost
+                , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Show_SnackBar(R.drawable.icon_toast_warning, "Lỗi!", "Đóng");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("idPost", String.valueOf(id));
+                params.put("phoneUser",HomeActivity.phone_number_user);
+                return params;
+            }
+        };
+        requestQueue.add(request);
+
+    }
+    public void addNotifi(String typeNotifi){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.POST, Server.addNotifi
+                , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Show_SnackBar(R.drawable.icon_toast_warning, "Lỗi!", "Đóng");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("idPost", String.valueOf(id));
+                params.put("phoneUser",HomeActivity.phone_number_user);
+                params.put("typeNotifi",typeNotifi);
+                params.put("timeNotifi", String.valueOf(System.currentTimeMillis()));
+                return params;
+            }
+        };
+        requestQueue.add(request);
+    }
+//
 
 
     public  final void Show_SnackBar( int i, String t, String a){

@@ -165,7 +165,7 @@ public class PostActivity extends AppCompatActivity {
         //select image 1
         i1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { // sử dụng thư viện detex để xin cấp quyền bộ nhớ để chọn ảnh
                 Dexter.withActivity(PostActivity.this)
                         .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                         .withListener(new PermissionListener() {
@@ -293,16 +293,16 @@ public class PostActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 if (response.equals("Done")){
                     sound.playSound(getApplicationContext(),R.raw.thongbao);
-                    Show_Toast("Bài viết đang được chờ duyệt.", R.drawable.icon_check_success);
-                    Thongbaoday();
-//                    Toast.makeText(getApplicationContext(), "Thêm bài viết thành công", Toast.LENGTH_SHORT).show();
-                    new Handler().postDelayed(() -> {
-                        PostActivity.this.finish();
-                        startActivity(getIntent());
-                    },4000);
+                  Show_Toast("Bài viết đang được chờ duyệt.", R.drawable.icon_check_success);
+                  onBackPressed();
+          //          Thongbaoday();
+      //            Toast.makeText(PostActivity.this, "Thêm bài viết thành công", Toast.LENGTH_SHORT).show();
+//                    new Handler().postDelayed(() -> {
+//                        PostActivity.this.finish();
+//                        startActivity(getIntent());
+//                    },4000);
 //                    isPost();
                 }else {
-                    Toast.makeText(PostActivity.this, "Bài viết của bạn đã post thành công và đợi phê duyệt từ admin", Toast.LENGTH_SHORT).show();
                     Show_Toast("Đăng bài không thành công.", R.drawable.icon_error);
 //                    Toast.makeText(getApplicationContext(), "Thêm bài viết không thành công", Toast.LENGTH_SHORT).show();
                 }
@@ -348,7 +348,7 @@ public class PostActivity extends AppCompatActivity {
                 bitmap = BitmapFactory.decodeStream(inputStream);
                 i1.setImageBitmap(bitmap);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
                 byte[] imageBytes = stream.toByteArray();
                 encodeImage1 = android.util.Base64.encodeToString(imageBytes, Base64.DEFAULT);
             } catch (FileNotFoundException e) {
@@ -364,7 +364,7 @@ public class PostActivity extends AppCompatActivity {
                 bitmap = BitmapFactory.decodeStream(inputStream);
                 i2.setImageBitmap(bitmap);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
                 byte[] imageBytes = stream.toByteArray();
                 encodeImage2 = android.util.Base64.encodeToString(imageBytes, Base64.DEFAULT);
             } catch (FileNotFoundException e) {
@@ -380,7 +380,7 @@ public class PostActivity extends AppCompatActivity {
                 bitmap = BitmapFactory.decodeStream(inputStream);
                 i3.setImageBitmap(bitmap);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
                 byte[] imageBytes = stream.toByteArray();
                 encodeImage3 = android.util.Base64.encodeToString(imageBytes, Base64.DEFAULT);
             } catch (FileNotFoundException e) {
@@ -396,7 +396,7 @@ public class PostActivity extends AppCompatActivity {
                 bitmap = BitmapFactory.decodeStream(inputStream);
                 i4.setImageBitmap(bitmap);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
                 byte[] imageBytes = stream.toByteArray();
                 encodeImage4 = android.util.Base64.encodeToString(imageBytes, Base64.DEFAULT);
             } catch (FileNotFoundException e) {
@@ -559,10 +559,16 @@ public class PostActivity extends AppCompatActivity {
                         Show_SnackBar(R.drawable.icon_toast_warning,"Vui lòng chọn đủ hình ảnh!", "Đóng");
                         sound.playSound(PostActivity.this, R.raw.toast);
                     }
-                    else {   // khi mọi thông tin đã thực hiện thành công thi ta thực hiện đăng bài
-                        huyBoBackground();  // hủy bỏ backgprung
+                    else {
+                        // khi mọi thông tin đã thực hiện thành công thi ta thực hiện đăng bài
+           ///       Thongbaoday();
+                   //     huyBoBackground();  // hủy bỏ backgprung
                         postContent();    // đăng bài
-                        sound.playSound(PostActivity.this, R.raw.post_like_cmt);
+                    //    sound.playSound(PostActivity.this, R.raw.post_like_cmt);
+
+                        // đăng bài
+
+
                     }
                 }
 
@@ -853,10 +859,10 @@ public class PostActivity extends AppCompatActivity {
     //endregion
 
     //region Ghi đè nút back trên điện thoại, vô hiệu hóa quay lại màn hình trước
-    @Override
-    public void onBackPressed() {
-        Show_Popup("Bạn có muốn hủy bài viết? Quá trình này không thể hoàn tác!");
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Show_Popup("Bạn có muốn hủy bài viết? Quá trình này không thể hoàn tác!");
+//    }
     //endregion
 
     //region check internet

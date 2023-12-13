@@ -3,21 +3,23 @@ package com.hien.ketnoiviet.model;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    public int Idusers;
-    public String Nameuser;
-    public String Birthday;
-    public String Gender;
-    public String Imageuser;
-    public String Email;
-    public String Phonenumber;
-    public String Status;
-    public String Hometown;
-    public int Money;
-    public String Datecreate;
-    public String Password;
-    public String cover;
+    private int Idusers;
+    private String Nameuser;
+    private String Birthday;
+    private String Gender;
+    private String Imageuser;
+    private String Email;
+    private String Phonenumber;
+    private String Status;
+    private String Hometown;
+    private int Money;
+    private String Datecreate;
+    private String Password;
+    private String cover;
 
 
+    public User() {
+    }
 
     public User(int idusers, String nameuser, String birthday, String gender, String imageuser, String email, String phonenumber, String status, String hometown, int money, String datecreate, String password, String cover) {
         Idusers = idusers;
@@ -40,7 +42,7 @@ public class User implements Serializable {
     }
 
     public void setIdusers(int idusers) {
-        this.Idusers = idusers;
+        Idusers = idusers;
     }
 
     public String getNameuser() {
@@ -88,7 +90,7 @@ public class User implements Serializable {
     }
 
     public void setPhonenumber(String phonenumber) {
-        this.Phonenumber = phonenumber;
+        Phonenumber = phonenumber;
     }
 
     public String getStatus() {

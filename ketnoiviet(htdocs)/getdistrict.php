@@ -7,7 +7,7 @@
 
 	// tạo câu lệnh truy vấn lấy huyện của 1 tỉnh qua id tỉnh 
 	$query = "SELECT * FROM district WHERE provinceid = $idtinh ";
-	$data 			= mysqli_query($conn, $query);
+	$data = mysqli_query($conn, $query);
 	// truyền dữ liệu nhận được vào mảng huện 
 	while ($row = mysqli_fetch_assoc($data)) {
 		array_push($manghuyen, new District(

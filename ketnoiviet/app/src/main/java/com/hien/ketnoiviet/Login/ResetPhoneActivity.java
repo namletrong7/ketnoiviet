@@ -162,7 +162,7 @@ public class ResetPhoneActivity extends AppCompatActivity {
                 String ip6phone = so6phone.getText().toString().trim();
                 String code = ip1phone + ip2phone + ip3phone + ip4phone + ip5phone + ip6phone ;
 //                String code = verifi_code_reset_phone.getText().toString();
-                if (TextUtils.isEmpty(code)){
+                if (TextUtils.isEmpty(code)){  // kiểm tra chuỗi có trống hay không
 //                    Toast.makeText(getApplicationContext(), "Vui lòng nhập mã xác nhận!", Toast.LENGTH_SHORT).show();
 //                    sound.playSound(ResetPhoneActivity.this, R.raw.toast);
                     Show_SnackBar(R.drawable.icon_toast_warning, "Vui lòng nhập mã xác nhận!", "Đóng");
@@ -249,9 +249,8 @@ public class ResetPhoneActivity extends AppCompatActivity {
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
+    // hàm xác thực code vừa gửi về có đúng hay ko
     private void verifiPhoneNumberWithCode(String verificationId, String code) {
-//        loadingBar.setMessage("Mã xác nhận");
-//        loadingBar.show();
 
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         signInWithPhoneAuthCredential(credential);

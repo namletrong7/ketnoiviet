@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -30,6 +31,7 @@ import com.hien.ketnoiviet.Others.SearchPlace;
 import com.hien.ketnoiviet.R;
 import com.hien.ketnoiviet.adapter.PostAdapter;
 import com.hien.ketnoiviet.adapter.countAllLikeAdapter;
+import com.hien.ketnoiviet.message.messageActivity;
 import com.hien.ketnoiviet.model.Like;
 import com.hien.ketnoiviet.model.Post;
 import com.hien.ketnoiviet.ultil.CheckConnection;
@@ -53,8 +55,7 @@ public class HomeFragment extends Fragment {
     public ArrayList<Post> arrayPost  // danh sách tất cả bài post của tất cả mọi người
             ,arrayPostFl;  // danh sách bài post của những người mình đang theo dõi
     public PostAdapter postAdapter,postAdapterFl;
-
-    ImageButton search_button_home;
+    ImageButton search_button_home,imgBtnMessage;
 
     @Nullable
     @Override
@@ -64,6 +65,14 @@ public class HomeFragment extends Fragment {
         list_post_home_follow = view.findViewById(R.id.list_post_home_follow);
         list_post_home_follow.setVisibility(View.GONE);
 
+        imgBtnMessage = view.findViewById(R.id.imgBtnMessage);
+        imgBtnMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), messageActivity.class));
+                getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_right);
+            }
+        });
 
       // set adapter chi listView chứ tất cả các bài post
         arrayPost = new ArrayList<>();
@@ -154,20 +163,17 @@ public class HomeFragment extends Fragment {
 
 
     private void GetDataPost() {
-
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Server.getPost, null,
             new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     arrayPost.clear();
-//                    Toast.makeText(getContext(), "T" + response, Toast.LENGTH_SHORT).show();
                     if(response != null){
                         for(int i=0;i<response.length();i++){
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
                                 int idpost = jsonObject.getInt("id");
-
                                 String nameplace = jsonObject.getString("nameplace");
                                 String province  =  jsonObject.getString("province");
                                 String district  =  jsonObject.getString("district");
@@ -184,17 +190,14 @@ public class HomeFragment extends Fragment {
                                 int status = jsonObject.getInt("status");
                                 String nameuser = jsonObject.getString("nameuser");
                                 String imageuser = jsonObject.getString("imageuser");
-
                                 getTotalLike(idpost);
-//                                Toast.makeText(getContext(), " " + like, Toast.LENGTH_SHORT).show();
-
-//                              Toast.makeText(getContext(), "Bài viết:" + idpost + "\n" + nameplace + "\n" + address + "\n" + image1 + "\n" + phoneuser + "\n" + datepost + "\n" + status + "\n", Toast.LENGTH_SHORT).show();
                                 arrayPost.add(new Post(idpost, nameplace, province, district, ward, address, description, content, image1, image2, image3, image4, phoneuser, datepost, status,nameuser,imageuser));
-                                postAdapter.notifyDataSetChanged();
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
+                        postAdapter.notifyDataSetChanged();
 //                        Toast.makeText(getContext(), "Độ dài:" + arrayPost.size(), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -210,11 +213,11 @@ public class HomeFragment extends Fragment {
     }
 
 
-
+ // lấy dữ liệu bài post theo follow
     private void GetDataPostFollow() {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getPostByFollow, response -> {
-//            Toast.makeText(getContext(), "F:" + response, Toast.LENGTH_SHORT).show();
+
             arrayPostFl.clear();
             try {
                 JSONArray jsonArray = new JSONArray(response);
@@ -256,4 +259,14 @@ public class HomeFragment extends Fragment {
         };
         requestQueue.add(stringRequest);
     }
+
+//    public void changeToMessage(){
+//        imgBtnMessage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getContext(), messageActivity.class));
+//
+//            }
+//        });
+//    }
 }

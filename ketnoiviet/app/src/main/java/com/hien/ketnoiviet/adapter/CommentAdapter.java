@@ -53,7 +53,11 @@ public class CommentAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return arraylistcomment.size();
+        if (arraylistcomment != null) { // Kiểm tra xem danh sách có null không
+            return arraylistcomment.size();
+        } else {
+            return 0; // Trả về 0 nếu danh sách là null
+        }
     }
 
     @Override
@@ -66,15 +70,15 @@ public class CommentAdapter extends BaseAdapter {
         return i;
     }
 
-    public class ViewHolder{
+    public class ViewHolder {
         ImageView img_user_comment;
-        TextView name_user_comment,content_user_comment;
+        TextView name_user_comment, content_user_comment;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder = null;
-        if(view == null){
+        if (view == null) {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.dong_listview_binhluan, null);
@@ -82,33 +86,27 @@ public class CommentAdapter extends BaseAdapter {
             viewHolder.name_user_comment = view.findViewById(R.id.name_user_comment);
             viewHolder.content_user_comment = view.findViewById(R.id.content_user_comment);
 
-      //      viewHolder.tvDeleteComment.setVisibility(view.GONE); // mặc định là ẩn đi nếu mà bình luận đó là của mình  thì mới hiện
+            //      viewHolder.tvDeleteComment.setVisibility(view.GONE); // mặc định là ẩn đi nếu mà bình luận đó là của mình  thì mới hiện
             view.setTag(viewHolder);
-        }
-        else
-        {
+        } else {
             viewHolder = (CommentAdapter.ViewHolder) view.getTag();
         }
         Comment comment = (Comment) getItem(i);  // lấy ra đối tượng comment từ  list ở tren
-        String hinhanhuser = Server.userget + comment.getImageUser() +"";
+        String hinhanhuser = Server.userget + comment.getImageUser() + "";
         Glide.with(context).load(hinhanhuser).into(viewHolder.img_user_comment);  // đưa hình
-        viewHolder.name_user_comment.setText(comment.getNameUser()+"");
-        viewHolder.content_user_comment.setText(comment.getContent()+"");
+        viewHolder.name_user_comment.setText(comment.getNameUser() + "");
+        viewHolder.content_user_comment.setText(comment.getContent() + "");
 
         viewHolder.name_user_comment.setOnClickListener(new View.OnClickListener() { // khi click vào tên người dùng
             @Override
             public void onClick(View view) {
-//                Toast.makeText(context.getApplicationContext(), "Tên", Toast.LENGTH_SHORT).show();
                 String phoneuser = comment.getPhoneUser();
-                if (phoneuser.equals(HomeActivity.phone_number_user)){ // nếu như người bình luận đang là người đăng nhập trên máy
-                    Toast.makeText(context.getApplicationContext(), "Giong", Toast.LENGTH_SHORT).show();
+                if (phoneuser.equals(HomeActivity.phone_number_user)) { // nếu như người bình luận đang là người đăng nhập trên máy
                     // chuyển sang acitivity chưa infor của người đó
                     Intent intent = new Intent(context, PersonalInfo.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-                }
-                else {  // khi người bình luận là 1 người khác không phải người đang đăng nhập trên máy đó
-//                    Toast.makeText(context.getApplicationContext(), "Khac", Toast.LENGTH_SHORT).show();
+                } else {  // khi người bình luận là 1 người khác không phải người đang đăng nhập trên máy đó
                     Intent intent = new Intent(context, PersonalOtherInfo.class);  // chuyển sang class chứ thông tin người đó
                     intent.putExtra("phoneuser", comment.getPhoneUser());// chuyên dữu liêu số dt người đó sang activity
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -120,13 +118,12 @@ public class CommentAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 String phoneuser = comment.getPhoneUser();
-                if (phoneuser.equals(HomeActivity.phone_number_user)){
+                if (phoneuser.equals(HomeActivity.phone_number_user)) {
 //                    Toast.makeText(context.getApplicationContext(), "Giong", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, PersonalInfo.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-                }
-                else {
+                } else {
 //                    Toast.makeText(context.getApplicationContext(), "Khac", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, PersonalOtherInfo.class);
                     intent.putExtra("phoneuser", comment.getPhoneUser());

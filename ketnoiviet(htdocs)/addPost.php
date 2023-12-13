@@ -18,7 +18,11 @@
     $phoneuser	= $_POST['phoneuser'];
 	$datepost	= $_POST['datepost'];
 	$status	= $_POST['status'];
+
    
+
+
+   // hàm rand() sinh 1 số ngẫu nhiên, hàm time() láy thời gian hiện tại
      // tạo tên ảnh để nhập vào đâu đát 
     $imageStore1 = rand()."_".time().".jpeg";
     $target_dir1 = $target_dir."/".$imageStore1;

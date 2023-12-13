@@ -28,6 +28,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hien.ketnoiviet.Home.HomeActivity;
 import com.hien.ketnoiviet.Intro.MainActivity;
 import com.hien.ketnoiviet.Login.ResetPhoneActivity;
@@ -46,11 +48,14 @@ public class ChangePassword extends AppCompatActivity {
     Button huy, xacNhan;
     TextView open_forgot_pass;
     String phoneUser ;
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+        reference= FirebaseDatabase.getInstance().getReference("User");
         // ánh xạ
         tvMatKhauCu=findViewById(R.id.tvMatKhauCu);
         tvMatKhauMoi=findViewById(R.id.tvMatKhauMoi);
@@ -82,6 +87,7 @@ public class ChangePassword extends AppCompatActivity {
            @Override
            public void onClick(View v) {
                changePassword();
+
            }
        });
 
@@ -143,7 +149,7 @@ public class ChangePassword extends AppCompatActivity {
     }
     //endregion
       public void changePassword(){
-          String url1=Server.checkMK ;
+          String url1=Server.checkPassword ;
           RequestQueue requestQueue1 = Volley.newRequestQueue(ChangePassword.this);
           // check mật khẩu cũ
           StringRequest stringRequest1= new StringRequest(Request.Method.POST, url1,
@@ -151,7 +157,7 @@ public class ChangePassword extends AppCompatActivity {
                       @Override
                       public void onResponse(String response1) {
                           if(response1.toString().equals(tvMatKhauCu.getText().toString())){
-                              String url=Server.doiMK ;
+                              String url=Server.changePassword ;
                               RequestQueue requestQueue = Volley.newRequestQueue(ChangePassword.this);
                               if(checkConFirmPassWord()==true){
                                   StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -161,6 +167,8 @@ public class ChangePassword extends AppCompatActivity {
 
                                                   // nếu mk nhập lại đúng thì thực hiện đổi mật khẩu
                                                   if(response.equals("Done")){
+                                                      String phoneUser= HomeActivity.phone_number_user ;
+                                                      reference.child(phoneUser).child("password").setValue(tvMatKhauMoi.getText().toString());
                                                       thongBao("Thông Báo","Đổi Mật Khẩu Thành Công");
                                                       Toast.makeText(ChangePassword.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
                                                       tvMatKhauCu.setText("");

@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".Others.Notification"
         android:allowBackup="true"
@@ -25,7 +26,21 @@
         android:theme="@style/Theme.ketnoiviet"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="stateVisible|adjustResize">
+        <activity
+            android:name=".message.chatActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
+        <activity
+            android:name=".message.messageActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".Here.SelectActivity"
             android:exported="false" />
@@ -35,7 +50,10 @@
         <activity
             android:name=".Others.NewsDetail"
             android:exported="true" />
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -141,7 +159,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

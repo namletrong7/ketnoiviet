@@ -121,7 +121,11 @@ public class RecyclerViewAdapterPost extends RecyclerView.Adapter<RecyclerViewAd
 
     @Override
     public int getItemCount() {
-        return arraypost.size();
+        if (arraypost != null) { // Kiểm tra xem danh sách có null không
+            return arraypost.size();
+        } else {
+            return 0; // Trả về 0 nếu danh sách là null
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

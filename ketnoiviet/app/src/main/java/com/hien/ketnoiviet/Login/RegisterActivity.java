@@ -313,6 +313,7 @@ public class RegisterActivity extends AppCompatActivity {
                 forceResendingToken = token;
             }
         };
+
         send_verifi_code_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -404,6 +405,7 @@ public class RegisterActivity extends AppCompatActivity {
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
+    // gửi lại mã xác nhận
     private void resendVerification(String phone, PhoneAuthProvider.ForceResendingToken token) {
         loadingBar.setMessage("Gửi lại mã");
         loadingBar.show();
@@ -418,6 +420,7 @@ public class RegisterActivity extends AppCompatActivity {
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
+    // xác nhận sdt vs mã
     private void verifiPhoneNumberWithCode(String verificationId, String code) {
         loadingBar.setMessage("Mã xác nhận");
         loadingBar.show();

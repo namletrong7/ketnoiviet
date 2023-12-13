@@ -24,7 +24,11 @@ public class WardAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return arraylistward.size();
+        if (arraylistward != null) { // Kiểm tra xem danh sách có null không
+            return arraylistward.size();
+        } else {
+            return 0; // Trả về 0 nếu danh sách là null
+        }
     }
 
     @Override

@@ -34,7 +34,11 @@ public class NewsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return arrayNew.size();
+        if (arrayNew != null) { // Kiểm tra xem danh sách có null không
+            return arrayNew.size();
+        } else {
+            return 0; // Trả về 0 nếu danh sách là null
+        }
     }
 
     @Override

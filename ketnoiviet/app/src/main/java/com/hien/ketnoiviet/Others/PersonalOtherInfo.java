@@ -39,6 +39,7 @@ import com.hien.ketnoiviet.Personal.PersonalInfo;
 import com.hien.ketnoiviet.R;
 import com.hien.ketnoiviet.adapter.PostAdapter;
 import com.hien.ketnoiviet.adapter.RecyclerViewAdapterPost;
+import com.hien.ketnoiviet.message.chatActivity;
 import com.hien.ketnoiviet.model.Post;
 import com.hien.ketnoiviet.ultil.CheckConnection;
 import com.hien.ketnoiviet.ultil.Server;
@@ -62,18 +63,19 @@ public class PersonalOtherInfo extends AppCompatActivity {
     Toolbar toolbar_personal_info_ct;
     String phonenumber_user = "";  // sdt của người dùng đó
     ImageView cover_personal_info_ct;
-    CircleImageView image_personal_info_ct,image_personal_info_ot_mini;
-    TextView username_personal_info_ct,status_personal_info_ct,hometown_personal_ct,gender_personal_ct,datecreate_personal_ct,birthday_personal_ct,phonenumber_personal_ct,email_personal_ct,follow_info_ot;
-    int     id       = 0;
-    String  name     = "";
-    String  date     = "";
-    String  sex      = "";
-    String  img = "";
-    String  bia = "";
-    String  mail = "";
-    String  phone = "";
-    String  stt = "";
-    String  home = "";
+    CircleImageView image_personal_info_ct, image_personal_info_ot_mini;
+    TextView btnMess;
+    TextView username_personal_info_ct, status_personal_info_ct, hometown_personal_ct, gender_personal_ct, datecreate_personal_ct, birthday_personal_ct, phonenumber_personal_ct, email_personal_ct, follow_info_ot;
+    int id = 0;
+    String name = "";
+    String date = "";
+    String sex = "";
+    String img = "";
+    String bia = "";
+    String mail = "";
+    String phone = "";
+    String stt = "";
+    String home = "";
     String url_image = "";
     String url_cover = "";
     int status = 0;
@@ -89,9 +91,9 @@ public class PersonalOtherInfo extends AppCompatActivity {
         event();
         getData();  // lấy  thông tin người dùng
         getPost();   // lấy các bài đăng của người dùng này
-   //     personal();  // lấy ảnh người dùng
+        //     personal();  // lấy ảnh người dùng
         getStatus();  // lấy trạng thái xem có theo dõi người dùng này hay không
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         RecyclerView recyclerView = findViewById(R.id.listbaiviet_personalot_rcv);
         recyclerView.setLayoutManager(layoutManager);
         recyclerViewAdapterPostt = new RecyclerViewAdapterPost(this, arrayPostInfot);
@@ -137,6 +139,7 @@ public class PersonalOtherInfo extends AppCompatActivity {
     }
 
     private void anhxa() {
+        btnMess = (TextView) findViewById(R.id.btnMess);
         cover_personal_info_ct = (ImageView) findViewById(R.id.cover_personal_info_ot);
         image_personal_info_ct = (CircleImageView) findViewById(R.id.image_personal_info_ot);
         image_personal_info_ot_mini = findViewById(R.id.image_personal_info_ot_mini);
@@ -157,6 +160,7 @@ public class PersonalOtherInfo extends AppCompatActivity {
         // số điện thoại người dùng từ activity khác
         Intent intent = this.getIntent();
         phonenumber_user = intent.getStringExtra("phoneuser");
+   //     Toast.makeText(this, phonenumber_user+"", Toast.LENGTH_SHORT).show();
     }
 
     private void event() {
@@ -171,7 +175,7 @@ public class PersonalOtherInfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), imgFitScreen.class);
-                intent.putExtra("avatar",  url_image);
+                intent.putExtra("avatar", url_image);
                 startActivity(intent);
             }
         });
@@ -180,17 +184,17 @@ public class PersonalOtherInfo extends AppCompatActivity {
             public void onClick(View view) {
                 // khi nhấn vào ảnh này sẽ lấy đường dẫn ảnh đó để xem
                 Intent intent = new Intent(getApplicationContext(), imgFitScreen.class);
-                intent.putExtra("cover",  url_cover);
+                intent.putExtra("cover", url_cover);
                 startActivity(intent);
             }
         });
         follow_info_ot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (status == 0){
+                if (status == 0) {
                     Show_Popup("Bạn có muốn theo dõi người dùng này!");
                 }
-                if (status == 1){
+                if (status == 1) {
                     Show_Popup("Bạn có muốn hủy theo dõi người dùng này!");
                 }
             }
@@ -222,45 +226,53 @@ public class PersonalOtherInfo extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void personal() {  // lấy thông tin ảnh đại diện và ảnh bìa của người dùng
-        String phone_number_person = HomeActivity.phone_number_user;
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getuserinfo, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    String  img = jsonObject.getString("imageuser");  //lấy đường dẫn ảnh đại diện của người đó
-                      String img_cover =jsonObject.getString("cover");  // lấy đường dẫn ảnh bìa của người dùng đó
-                        String url_image = Server.userget + img;
-                        String url_imgCover = Server.userget + img_cover;
-                    Glide.with(getApplicationContext()).load(url_image).into(image_personal_info_ot_mini);
-                //  Glide.with(getApplicationContext()).load(url_imgCover).into(cover_personal_info_ct);
-                    Picasso.get().load(url_imgCover).into(cover_personal_info_ct);
-
-                    
+//    private void personal() {  // lấy thông tin ảnh đại diện và ảnh bìa của người dùng
+//        Intent intent = getIntent();
+//        String phoneNumber ;
+//        if (intent != null) {
+//             phoneNumber = intent.getStringExtra("phone_number");
+//            // Kiểm tra xem phoneNumber có tồn tại và sử dụng nó theo cách bạn cần.
+//            if (phoneNumber != null) {
+//                // Xử lý số điện thoại ở đây.
+//            }
+//        }
+//        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getuserinfo, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    JSONArray jsonArray = new JSONArray(response);
+//                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+//                    String img = jsonObject.getString("imageuser");  //lấy đường dẫn ảnh đại diện của người đó
+//                    String img_cover = jsonObject.getString("cover");  // lấy đường dẫn ảnh bìa của người dùng đó
+//                    String url_image = Server.userget + img;
+//                    String url_imgCover = Server.userget + img_cover;
+//                    Glide.with(getApplicationContext()).load(url_image).into(image_personal_info_ot_mini);
+//                    //  Glide.with(getApplicationContext()).load(url_imgCover).into(cover_personal_info_ct);
+//                    Picasso.get().load(url_imgCover).into(cover_personal_info_ct);
 //
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-//                CheckConnection.ShowToast_Short(getApplicationContext(), "Lỗi kết nối dữ liệu..." + error.toString());
-            }
-        }){
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> param = new HashMap<String, String>();
-                param.put("phone_number",phone_number_person);
-                return param;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
+//
+////
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+////                CheckConnection.ShowToast_Short(getApplicationContext(), "Lỗi kết nối dữ liệu..." + error.toString());
+//            }
+//        }) {
+//            @Nullable
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                HashMap<String, String> param = new HashMap<String, String>();
+//                param.put("phone_number", phoneNumber);
+//                return param;
+//            }
+//        };
+//        requestQueue.add(stringRequest);
+//    }
 
     private void getData() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -270,26 +282,26 @@ public class PersonalOtherInfo extends AppCompatActivity {
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    int     id       = jsonObject.getInt("idusers");
-                    name     = jsonObject.getString("nameuser");
-                    date     = jsonObject.getString("birthday");
-                    sex      = jsonObject.getString("gender");
+                    int id = jsonObject.getInt("idusers");
+                    name = jsonObject.getString("nameuser");
+                    date = jsonObject.getString("birthday");
+                    sex = jsonObject.getString("gender");
                     img = jsonObject.getString("imageuser");
                     bia = jsonObject.getString("cover");
                     mail = jsonObject.getString("email");
                     phone = jsonObject.getString("phonenumber");
                     stt = jsonObject.getString("status");
                     home = jsonObject.getString("hometown");
-                    int     dollar = jsonObject.getInt("money");
-                    String  create = jsonObject.getString("datecreate");
-                    String  pw = jsonObject.getString("password");
+                    int dollar = jsonObject.getInt("money");
+                    String create = jsonObject.getString("datecreate");
+                    String pw = jsonObject.getString("password");
 
 
                     url_image = Server.userget + img;
                     url_cover = Server.userget + bia;
-                    if (date.isEmpty()){
+                    if (date.isEmpty()) {
                         birthday_personal_ct.setText("Sinh nhật: Bí mật");
-                    }else {
+                    } else {
                         String[] dates = date.split("/");
                         String date1 = dates[0];
                         String date2 = dates[1];
@@ -298,32 +310,45 @@ public class PersonalOtherInfo extends AppCompatActivity {
                     }
                     username_personal_info_ct.setText(name);
 //                    phonenumber_personal_ct.setText(phone);
-                    if (mail.isEmpty()){
+                    if (mail.isEmpty()) {
                         email_personal_ct.setText("Email: Bí mật");
-                    }else {
+                    } else {
                         email_personal_ct.setText(mail + " ");
                     }
 
                     status_personal_info_ct.setText(stt + " ");
                     datecreate_personal_ct.setText(create + " ");
-                    String[]  creates = create.split("/");
+                    String[] creates = create.split("/");
                     String create1 = creates[0];
                     String create2 = creates[1];
                     String create3 = creates[2];
                     datecreate_personal_ct.setText("Đã tham gia vào tháng " + create1 + " năm " + create3);
-                    if (home.isEmpty()){
+                    if (home.isEmpty()) {
                         hometown_personal_ct.setText("Đến từ " + "Bí mật");
-                    }else {
+                    } else {
                         hometown_personal_ct.setText("Đến từ " + home + " ");
                     }
-                    if (sex.isEmpty()){
+                    if (sex.isEmpty()) {
                         gender_personal_ct.setText("Giới tính: " + "Bí mật");
-                    }else {
+                    } else {
                         gender_personal_ct.setText("Giới tính: " + sex + " ");
                     }
                     Glide.with(getApplicationContext()).load(url_image).into(image_personal_info_ct);
                     Glide.with(getApplicationContext()).load(url_cover).into(cover_personal_info_ct);
                     toolbar_personal_info_ct.setTitle(name);
+
+                    btnMess.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(PersonalOtherInfo.this, chatActivity.class);
+                            intent.putExtra("nameUser", name);
+                            intent.putExtra("imageUser", url_image);
+                            intent.putExtra("phoneUser", phonenumber_user);
+                            startActivity(intent);
+                        }
+                    });
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -333,12 +358,12 @@ public class PersonalOtherInfo extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 //                CheckConnection.ShowToast_Short(getApplicationContext(), "Lỗi kết nối dữ liệu..." + error.toString());
             }
-        }){
+        }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
-                param.put("phone_number",phonenumber_user);
+                param.put("phone_number", phonenumber_user);
                 return param;
             }
         };
@@ -355,14 +380,14 @@ public class PersonalOtherInfo extends AppCompatActivity {
                 try {
                     JSONArray jsonArray = new JSONArray(response);
 
-                    for (int i=0;i<jsonArray.length();i++){
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         int idpost = jsonObject.getInt("id");
                         String nameplace = jsonObject.getString("nameplace");
-                        String province  =  jsonObject.getString("province");
-                        String district  =  jsonObject.getString("district");
-                        String ward  =  jsonObject.getString("ward");
-                        String address  =  jsonObject.getString("address");
+                        String province = jsonObject.getString("province");
+                        String district = jsonObject.getString("district");
+                        String ward = jsonObject.getString("ward");
+                        String address = jsonObject.getString("address");
                         String description = jsonObject.getString("description");
                         String content = jsonObject.getString("content");
                         String image1 = jsonObject.getString("image1");
@@ -376,7 +401,7 @@ public class PersonalOtherInfo extends AppCompatActivity {
                         String imageuser = jsonObject.getString("imageuser");
 
 //                              Toast.makeText(getContext(), "Bài viết:" + idpost + "\n" + nameplace + "\n" + address + "\n" + image1 + "\n" + phoneuser + "\n" + datepost + "\n" + status + "\n", Toast.LENGTH_SHORT).show();
-                        arrayPostInfot.add(new Post(idpost, nameplace, province, district, ward, address, description, content, image1, image2, image3, image4, phoneuser, datepost, status,nameuser,imageuser));
+                        arrayPostInfot.add(new Post(idpost, nameplace, province, district, ward, address, description, content, image1, image2, image3, image4, phoneuser, datepost, status, nameuser, imageuser));
                         recyclerViewAdapterPostt.notifyDataSetChanged();
 
                     }
@@ -389,12 +414,12 @@ public class PersonalOtherInfo extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 //                CheckConnection.ShowToast_Short(getApplicationContext(), "Lỗi kết nối dữ liệu..." + error.toString());
             }
-        }){
+        }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
-                param.put("phoneuser",phonenumber_user);
+                param.put("phoneuser", phonenumber_user);
                 return param;
             }
         };
@@ -403,12 +428,14 @@ public class PersonalOtherInfo extends AppCompatActivity {
 
     //region check internet
     com.hien.ketnoiviet.ultil.networkChangeListener networkChangeListener = new networkChangeListener();
+
     @Override
     protected void onStart() {
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(networkChangeListener,filter);
+        registerReceiver(networkChangeListener, filter);
         super.onStart();
     }
+
     @Override
     protected void onStop() {
         unregisterReceiver(networkChangeListener);
@@ -418,7 +445,7 @@ public class PersonalOtherInfo extends AppCompatActivity {
 
 
     //region Custom a notification
-    public void Show_Popup(String text){
+    public void Show_Popup(String text) {
 
         sound.playSound(PersonalOtherInfo.this, R.raw.thongbao);
 

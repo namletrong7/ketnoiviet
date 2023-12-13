@@ -91,7 +91,11 @@ public class RecyclerViewAdapterComment extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemCount() {
-        return arrayComment.size();
+        if (arrayComment != null) { // Kiểm tra xem danh sách có null không
+            return arrayComment.size();
+        } else {
+            return 0; // Trả về 0 nếu danh sách là null
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

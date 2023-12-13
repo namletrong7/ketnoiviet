@@ -9,9 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="text_color">#000</color>
     <color name="text_color_hint">#C0C0C0</color>
-    <color name="background">#f1f2f6</color>
+    <color name="background">#f0f1f5</color>
     <color name="red_primary">#f44653</color>
     <color name="blue_primary">#4e1a67</color>
     <color name="purple_primary">#117EC6</color>
     <color name="mau_trong_suot">#00000000</color>
+    <color name="gray">#B0C4DE</color>
 </resources>

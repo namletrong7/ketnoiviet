@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   android:background="@color/black"
+    tools:context=".message.messageActivity">
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="411dp"
+        android:layout_height="63dp"
+        android:background="@color/black"
+      >
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/icon_arrow_back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="110dp"
+            android:fontFamily="@font/sf"
+            android:text="Đoạn chát"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            tools:fontFamily="@font/sf_pro"
+            tools:layout_editor_absoluteX="120dp"
+            tools:layout_editor_absoluteY="22dp" />
+        <Button
+            android:id="@+id/btnCheck"
+            android:layout_width="50dp"
+            android:background="@drawable/icon_arrow_back"
+            android:layout_marginLeft="30dp"
+            android:layout_height="50dp"/>
+    </Toolbar>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/search"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/toolbar">
+        <EditText
+            android:id="@+id/edtUserName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="30dp"
+            android:drawableLeft="@drawable/icon_search"
+            android:background="@drawable/custom_background_gray"
+            android:hint="Tìm kiếm"
+            android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:paddingTop="5dp"
+            android:textColorHint="#c0c0c0"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/recycler_conversation"
+        android:layout_below="@+id/search"
+         android:layout_marginTop="10dp"
+         android:layout_width="match_parent"
+         tools:listitem="@layout/row_conversation"
+         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+         android:layout_height="match_parent"/>
+</RelativeLayout>

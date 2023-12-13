@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:background="@color/black"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_marginBottom="5dp"
+    android:orientation="horizontal"
+   >
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:padding="5dp"
+      android:layout_height="wrap_content">
+      <de.hdodenhof.circleimageview.CircleImageView
+          android:id="@+id/imgUser"
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          android:src="@drawable/iconuser"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+  </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvNameUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Sample Name"
+            android:layout_marginLeft="50dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/sf_pro"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/profile"
+            app:layout_constraintTop_toTopOf="@+id/profile" />
+
+        <TextView
+            android:id="@+id/tvLassMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="50dp"
+            android:text="ê m dang làm gì t"
+            android:textColor="#c0c0c0"
+            android:textSize="16sp"
+            android:fontFamily="@font/sf_pro"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/profile"
+            app:layout_constraintTop_toTopOf="@+id/profile" />
+
+
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>

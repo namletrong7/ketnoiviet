@@ -58,7 +58,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return mImageUrls.size();
+        if (mImageUrls != null) { // Kiểm tra xem danh sách có null không
+            return mImageUrls.size();
+        } else {
+            return 0; // Trả về 0 nếu danh sách là null
+        }
     }
 
 

@@ -59,7 +59,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PersonalInfo extends AppCompatActivity {
-
+  // xem thông tin người dùng đang đăng nhập trên thiết bị đó
     Toolbar toolbar_personal_info_ct;
     String phonenumber_user = "";
     ImageView cover_personal_info_ct;
@@ -167,7 +167,6 @@ public class PersonalInfo extends AppCompatActivity {
     }
 
     private void getData() {
-        String phone_number_person = HomeActivity.phone_number_user;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getuserinfo, new Response.Listener<String>() {
             @Override

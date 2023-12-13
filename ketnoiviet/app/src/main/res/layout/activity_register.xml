@@ -18,7 +18,8 @@
         app:title="Đăng ký"
         android:background="@color/purple_primary"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize">
+        android:layout_height="?actionBarSize"
+        tools:ignore="MissingClass">
     </androidx.appcompat.widget.Toolbar>
     <LinearLayout
         android:layout_weight="10"

@@ -1,6 +1,7 @@
 package com.hien.ketnoiviet.Home;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -21,6 +22,7 @@ import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,18 +35,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.common.collect.ArrayTable;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hien.ketnoiviet.Login.LoginActivity;
 import com.hien.ketnoiviet.Others.NewsDetail;
 import com.hien.ketnoiviet.R;
@@ -55,6 +63,7 @@ import com.hien.ketnoiviet.adapter.WardAdapter;
 import com.hien.ketnoiviet.model.News;
 import com.hien.ketnoiviet.model.Post;
 import com.hien.ketnoiviet.model.Province;
+import com.hien.ketnoiviet.model.User;
 import com.hien.ketnoiviet.ultil.CheckConnection;
 import com.hien.ketnoiviet.ultil.Server;
 import com.hien.ketnoiviet.ultil.XMLDOMParser;
@@ -73,20 +82,25 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class HomeActivity extends AppCompatActivity {
 
-
+    FirebaseDatabase database;
+    DatabaseReference reference;
     public static NewsAdapter newsAdapter;  // gọi ra apdapter cho các bài viết dó
     public static ArrayList<News> arrNews;
 
     private static final String FILE_NAME = "myFile";
     private BottomNavigationView mNavigationView;
     private ViewPager mViewPager;
-
+    ArrayList<User> listUser ;
     private static final String FILE_CHECK = "mycheck";
     public static String phone_number_user = "";
     private static final String FILE_POST = "isPost";
@@ -99,9 +113,10 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        viewBinding();
+        anhXa();
         event();
-
+        database = FirebaseDatabase.getInstance();
+        reference= FirebaseDatabase.getInstance().getReference("User");
         SharedPreferences sharedPreferences = getSharedPreferences(FILE_POST, MODE_PRIVATE);
         isPost = sharedPreferences.getString("isPost", "");
         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
@@ -118,6 +133,7 @@ public class HomeActivity extends AppCompatActivity {
                     Manifest.permission.ACCESS_FINE_LOCATION
             }, 44);
         }
+      //  getInforToFireBase();
     }
     // lấy danh sách bảng tin từ api của vnexpress
     private void getNewsJSON() {
@@ -134,17 +150,25 @@ public class HomeActivity extends AppCompatActivity {
                         String title = object.getString("title");
                         String date = object.getString("pubDate");
                         String link = object.getString("link");
-                        String description = object.getString("description");
+                        String description = object.getString("content");
                         String thumbnail = object.getString("thumbnail");
 
                         //region Cắt chuỗi Description
                         String[] parts = description.split("</a>");
                         String part1 = parts[0]; // 004
-                        String part2 = parts[1]; // 034556
+           //     String part2 = parts[1]; // 034556
                         //endregion
+                        String pattern = "<a.*>(.*)<.*>.*</a>(.*)";
+
+                        Pattern r = Pattern.compile(pattern);
+                        Matcher m = r.matcher(description);
+
 
 //                        Toast.makeText(getApplicationContext(), "Thumbnail: " + thumbnail, Toast.LENGTH_SHORT).show();
-                        arrNews.add(new News(title,link,date,thumbnail,part2));
+                      if(m.find()){
+                          arrNews.add(new News(title,link,date,thumbnail,m.group(2)));
+                      }
+
                     }
                     newsAdapter.notifyDataSetChanged();
 
@@ -184,9 +208,9 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.action_add:
                         mViewPager.setCurrentItem(1);
                         break;
-                    case R.id.action_here:
-                        mViewPager.setCurrentItem(2);
-                        break;
+//                    case R.id.action_here:
+//                        mViewPager.setCurrentItem(2);
+//                        break;
                     case R.id.action_notify:
                     //case R.layout.activity_read_news:
                         mViewPager.setCurrentItem(3);
@@ -221,9 +245,9 @@ public class HomeActivity extends AppCompatActivity {
                     case 1:
                         mNavigationView.getMenu().findItem(R.id.action_add).setChecked(true);
                         break;
-                    case 2:
-                        mNavigationView.getMenu().findItem(R.id.action_here).setChecked(true);
-                        break;
+//                    case 2:
+//                        mNavigationView.getMenu().findItem(R.id.action_here).setChecked(true);
+//                        break;
                     case 3:
                         mNavigationView.getMenu().findItem(R.id.action_notify).setChecked(true);
                         //mNavigationView.getMenu().findItem(R.layout.activity_read_news);
@@ -241,14 +265,17 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void viewBinding() {
+    private void anhXa() {
         mNavigationView = findViewById(R.id.nav_home);
         mViewPager = findViewById(R.id.viewpager_home);
+        listUser=new ArrayList<>();
         // láy key từ login Activity sang
         SharedPreferences sharedPreferences = getSharedPreferences(FILE_CHECK, MODE_PRIVATE);
         phone_number_user = sharedPreferences.getString("phone", "");
 //        Toast.makeText(getApplicationContext(), phone_number_user, Toast.LENGTH_SHORT).show();
     }
+
+
 
     //region Ghi đè nút back trên điện thoại, vô hiệu hóa quay lại màn hình trước
     @Override
@@ -258,11 +285,12 @@ public class HomeActivity extends AppCompatActivity {
     //endregion
 
     //region check internet
-    com.hien.ketnoiviet.ultil.networkChangeListener networkChangeListener = new networkChangeListener();
+   networkChangeListener networkChangeListener = new networkChangeListener();
     @Override
     protected void onStart() {
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangeListener,filter);
+        Log.d("vongDoi", "onStart: ");
         super.onStart();
     }
     @Override

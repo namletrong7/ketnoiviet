@@ -39,7 +39,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.hien.ketnoiviet.Intro.MainActivity;
+import com.hien.ketnoiviet.model.User;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -75,7 +82,9 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UpdateInformation extends AppCompatActivity {
-
+    FirebaseAuth auth;
+    FirebaseDatabase database;
+    DatabaseReference reference;
     DatePickerDialog.OnDateSetListener setListener;
 
     Bitmap bitmap;
@@ -103,18 +112,23 @@ public class UpdateInformation extends AppCompatActivity {
     String url_cover = "";
     int isClickImg = 0;
     int isClickCv = 0;
+    String create,pw;
+    int dollar;
+    String phone_number_person;
+    // đưa user vào trong firebase
 
-//    MediaPlayer toast_media = MediaPlayer.create(UpdateInformation.this, R.raw.toast);
-//    MediaPlayer thongbao = MediaPlayer.create(this, R.raw.thongbao);
-//    MediaPlayer post_like_cmt = MediaPlayer.create(this, R.raw.post_like_cmt);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_information);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+     phone_number_person = HomeActivity.phone_number_user;
         anhxa();
-
+      database = FirebaseDatabase.getInstance();
+      reference= FirebaseDatabase.getInstance().getReference("User");
+//        auth = FirebaseAuth.getInstance();
         if (CheckConnection.haveNetworkConnection(getApplicationContext())){
             event();
             //thongbao.start();
@@ -141,17 +155,21 @@ public class UpdateInformation extends AppCompatActivity {
             }
         });
         personal();
+
+   //     User user= new User(1,"lê nam","20/11/2022","nam","nam","u là toeif","0337355","nam","nam",1,"nam","nam","nam");
+
+
     }
 
     private void event() {
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(); // láy thông tin ngày tháng năm hiện tại
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
         birthday_update_person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                       DatePickerDialog datePickerDialog = new DatePickerDialog(
                         UpdateInformation.this, R.style.DatePickerTheme
                         , setListener, year, month, day);
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -179,15 +197,15 @@ public class UpdateInformation extends AppCompatActivity {
 //                birthday_update_person.setText(day+"/"+month+"/"+year);
 //            }
 
-            if (year1<year){
+            if (year1<year){  // nếu năm dc chọn bé hơn năm hiện tại thì sét luôn
                 birthday_update_person.setText(date);
-            } else if(year1==year) {
-                if(month1<month){
+            } else if(year1==year) {  // nếu năm dc chọn bằng năm hiện tại
+                if(month1<month){ // tháng dc chọn < tháng hiện tại
                     birthday_update_person.setText(date);
-                } else if (month1==month) {
-                    if(day1<=day) {
+                } else if (month1==month) { // nếu tháng dc chọn = tháng hiện tại
+                    if(day1<=day) {  // ngày dc chọn bé hơn ngày hiện tại thì chọn luôn
                         birthday_update_person.setText(date);
-                    } else {
+                    } else {  // nếu ngày dc chọn > ngày hiện tại
                         birthday_update_person.setText(day+"/"+month+"/"+year);
                     }
 
@@ -258,6 +276,7 @@ public class UpdateInformation extends AppCompatActivity {
         confirm_update_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (name_update_info.getText().toString().trim().equals("")||
                 birthday_update_person.getText().toString().trim().equals("")||
                 mail_update_info.getText().toString().trim().equals("")||
@@ -269,22 +288,27 @@ public class UpdateInformation extends AppCompatActivity {
                 }
                 else {
                     sound.playSound(UpdateInformation.this, R.raw.thongbao);
-                    if (isClickCv == 0 && isClickImg == 0){
+                    if (isClickCv == 0 && isClickImg == 0){  // update thông tin khi không có ảnh đại diện và bìa
                         NoupdateInformation();
+
                     }
                     else {
-                        if (isClickCv == 1 && isClickImg == 1){
+                        if (isClickCv == 1 && isClickImg == 1){ // upadate khi có cả 2 ảnh
                             updateInformation();
+
                         }
-                        else {
-                            if (isClickImg == 1){
+                        else {  // update khi ko có 2 ảnh
+                            if (isClickImg == 1){  // update khi chỉ có ảnh đại diện
                                 updateInformationonlyimg();
+
                             }
-                            if (isClickCv == 1){
+                            if (isClickCv == 1){// upadte khi chỉ có ảnh bìa
                                 updateInformationonlycv();
+
                             }
                         }
                     }
+                    upDateInforOnFireBase();
                 }
             }
         });
@@ -297,7 +321,7 @@ public class UpdateInformation extends AppCompatActivity {
         });
     }
 
-    private void updateInformationonlycv() {
+    private void updateInformationonlycv() { // cập nhập thông tin khi thiếu ảnh đại diện
         String phone_number_person = HomeActivity.phone_number_user;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.updateuserinfoonlycv, new Response.Listener<String>() {
@@ -342,7 +366,7 @@ public class UpdateInformation extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void updateInformationonlyimg() {
+    private void updateInformationonlyimg() {  // cập nhập thông tin khi ko có ảnh đại diện
         String phone_number_person = HomeActivity.phone_number_user;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.updateuserinfoonlyimg, new Response.Listener<String>() {
@@ -386,7 +410,7 @@ public class UpdateInformation extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void NoupdateInformation() {
+    private void NoupdateInformation() {  // cập nhập thông tin khi thiếu cả ảnh đại diện vs ảnh bìa
         String phone_number_person = HomeActivity.phone_number_user;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.noupdateuserinfo, new Response.Listener<String>() {
@@ -430,7 +454,6 @@ public class UpdateInformation extends AppCompatActivity {
     }
 
     private void updateInformation() {
-        String phone_number_person = HomeActivity.phone_number_user;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.updateuserinfo, new Response.Listener<String>() {
             @Override
@@ -473,7 +496,63 @@ public class UpdateInformation extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
+    private void upDateInforOnFireBase() {
+        String phone_number_person = HomeActivity.phone_number_user;
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getuserinfo, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    id       = jsonObject.getInt("idusers");
+                    name     = jsonObject.getString("nameuser");
+                    date     = jsonObject.getString("birthday");
+                    sex      = jsonObject.getString("gender");
+                    img = jsonObject.getString("imageuser");
+                    bia = jsonObject.getString("cover");
+                    mail = jsonObject.getString("email");
+                    phone = jsonObject.getString("phonenumber");
+                    stt = jsonObject.getString("status");
+                    home = jsonObject.getString("hometown");
+                    dollar = jsonObject.getInt("money");
+                    create = jsonObject.getString("datecreate");
+                    pw = jsonObject.getString("password");
 
+                    reference.child(phone_number_person).child("status").setValue(status_update_info.getText().toString());
+                    reference.child(phone_number_person).child("imageuser").setValue(img);
+                    reference.child(phone_number_person).child("nameuser").setValue(name_update_info.getText().toString());
+
+
+
+
+
+
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                CheckConnection.ShowToast_Short(getApplicationContext(), "Lỗi kết nối dữ liệu..." + error.toString());
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("phone_number",phone_number_person);
+                return param;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
     private void personal() {
         String phone_number_person = HomeActivity.phone_number_user;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -483,7 +562,7 @@ public class UpdateInformation extends AppCompatActivity {
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    int     id       = jsonObject.getInt("idusers");
+                       id       = jsonObject.getInt("idusers");
                       name     = jsonObject.getString("nameuser");
                       date     = jsonObject.getString("birthday");
                       sex      = jsonObject.getString("gender");
@@ -493,14 +572,12 @@ public class UpdateInformation extends AppCompatActivity {
                       phone = jsonObject.getString("phonenumber");
                       stt = jsonObject.getString("status");
                       home = jsonObject.getString("hometown");
-                    int     dollar = jsonObject.getInt("money");
-                    String  create = jsonObject.getString("datecreate");
-                    String  pw = jsonObject.getString("password");
+                      dollar = jsonObject.getInt("money");
+                     create = jsonObject.getString("datecreate");
+                     pw = jsonObject.getString("password");
+                     url_image = Server.userget + img;
+                     url_cover = Server.userget + bia;
 
-
-                        url_image = Server.userget + img;
-                         url_cover = Server.userget + bia;
-//                        Toast.makeText(getApplicationContext(), ""+ url_image + "\n" + url_cover, Toast.LENGTH_SHORT).show();
                         birthday_update_person.setText(date);
                         name_update_info.setText(name);
                         phone_update_info.setText(phone);
@@ -508,12 +585,22 @@ public class UpdateInformation extends AppCompatActivity {
                         status_update_info.setText(stt);
                         home_update_info.setText(home);
                         Gender = sex;
-
                         Glide.with(getApplicationContext()).load(url_image).into(imageuser_update_person);
                         Glide.with(getApplicationContext()).load(url_cover).into(cover_update_person);
+
+
+
+
+
+
+
+
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -547,23 +634,6 @@ public class UpdateInformation extends AppCompatActivity {
         icon_arrow_back_back = findViewById(R.id.toolbar_update_info);
     }
 
-    //region Custom a toast
-//    public final void Show_Toast(String t, int s){
-//        LayoutInflater inflater = getLayoutInflater();
-//        View layout = inflater.inflate(R.layout.toast,
-//                findViewById(R.id.toast_layout_root));
-//        ImageView image = layout.findViewById(R.id.image);
-//        image.setImageResource(s);
-//        TextView text = layout.findViewById(R.id.text);
-//        text.setText(t);//
-//        Toast toast = new Toast(getApplicationContext());
-//        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-//        toast.setDuration(Toast.LENGTH_SHORT);
-//        toast.setView(layout);
-//        toast.show();
-//    }
-    //endregion
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null){
@@ -573,7 +643,7 @@ public class UpdateInformation extends AppCompatActivity {
                 bitmap = BitmapFactory.decodeStream(inputStream);
                 imageuser_update_person.setImageBitmap(bitmap);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                bitmap.compress(Bitmap.CompressFormat.JPEG,30 , stream);
                 byte[] imageBytes = stream.toByteArray();
                 encodeImage1 = android.util.Base64.encodeToString(imageBytes, Base64.DEFAULT);
                 isClickImg = 1;
@@ -588,7 +658,7 @@ public class UpdateInformation extends AppCompatActivity {
                 bitmap = BitmapFactory.decodeStream(inputStream);
                 cover_update_person.setImageBitmap(bitmap);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
                 byte[] imageBytes = stream.toByteArray();
                 encodeImage2 = android.util.Base64.encodeToString(imageBytes, Base64.DEFAULT);
                 isClickCv = 1;
@@ -598,6 +668,9 @@ public class UpdateInformation extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
+
 
     public  final void Show_SnackBar( int i, String t, String a){
         LayoutInflater inflater = getLayoutInflater();
@@ -640,7 +713,7 @@ public class UpdateInformation extends AppCompatActivity {
         text.setText(t);//
         Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.TOP, 0, 20);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
     }

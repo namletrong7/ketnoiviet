@@ -26,7 +26,11 @@ public class DistrictAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return arraylistdistrict.size();
+        if (arraylistdistrict != null) { // Kiểm tra xem danh sách có null không
+            return arraylistdistrict.size();
+        } else {
+            return 0; // Trả về 0 nếu danh sách là null
+        }
     }
 
     @Override

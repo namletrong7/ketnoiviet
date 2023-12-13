@@ -1,4 +1,5 @@
 <?php 
+// danh sách người like bài viết 
 	include "connect.php";
 	// $idpost = ;
 	$idpost = $_POST['idpost'];

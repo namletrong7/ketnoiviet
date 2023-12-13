@@ -20,7 +20,11 @@ public class countAllLikeAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return arrayLike.size();
+        if (arrayLike != null) { // Kiểm tra xem danh sách có null không
+            return arrayLike.size();
+        } else {
+            return 0; // Trả về 0 nếu danh sách là null
+        }
     }
 
     @Override

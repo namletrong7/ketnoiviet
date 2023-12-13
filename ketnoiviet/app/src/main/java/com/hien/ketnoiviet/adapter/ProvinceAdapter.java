@@ -25,7 +25,11 @@ public class ProvinceAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return arraylistprovince.size();
+        if (arraylistprovince != null) { // Kiểm tra xem danh sách có null không
+            return arraylistprovince.size();
+        } else {
+            return 0; // Trả về 0 nếu danh sách là null
+        }
     }
 
     @Override

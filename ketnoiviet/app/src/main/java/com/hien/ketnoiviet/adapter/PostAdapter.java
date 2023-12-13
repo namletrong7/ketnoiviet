@@ -52,7 +52,11 @@ public class PostAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return arraypost.size();
+        if (arraypost != null) { // Kiểm tra xem danh sách có null không
+            return arraypost.size();
+        } else {
+            return 0; // Trả về 0 nếu danh sách là null
+        }
     }
 
     @Override

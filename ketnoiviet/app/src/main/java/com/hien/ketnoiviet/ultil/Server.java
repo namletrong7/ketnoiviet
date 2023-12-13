@@ -3,11 +3,12 @@ package com.hien.ketnoiviet.ultil;
 public class Server {
 
  // public static String localhost = "https://ketnoiviet123.000webhostapp.com/";
-public static String localhost = "https://nhom1-l02.000webhostapp.com/";
-// public static String localhost = "http://192.168.1.106:8080/ketnoiviet/"; //hosting local0
-//public static String localhost = "http://192.168.1.6:8080/ketnoiviet/";
-
+//public static String localhost = "https://nhom1-l02.000webhostapp.com/";
+// public static String localhost = "http://192.168.22.100:8080/ketnoiviet/"; //hosting local0
+    public static String localhost = "http://192.168.1.107:8080/ketnoiviet/";
     public static String checkaccount = localhost + "checkaccout.php";
+    public static String getListUser = localhost + "getListUser.php";
+    public static String getListFollow = localhost + "getListFollow.php";
     public static String checkfollow = localhost + "checkfollow.php";
     public static String addfollow = localhost + "addfollow.php";
     public static String register = localhost + "register.php";
@@ -36,8 +37,8 @@ public static String localhost = "https://nhom1-l02.000webhostapp.com/";
     public static String getPostByPhoneUser = localhost + "getPostByPhoneUser.php";
     public static String imagesget = localhost + "images/";
     public static String userget =  localhost + "users/";
-    public static String checkMK =  localhost + "checkMK.php";
-    public static String doiMK =  localhost + "doiMK.php";
+    public static String checkPassword =  localhost + "checkPassword.php";
+    public static String changePassword =  localhost + "changePassword.php";
     public static String deleteCommment =  localhost + "deleteComment.php";
     public static String provinceget =  localhost + "provinces/";
     public static String getUnApprovedPost =  localhost + "getPost_notBrowseByUser.php";
@@ -45,4 +46,8 @@ public static String localhost = "https://nhom1-l02.000webhostapp.com/";
     public static String getPostByNameProvince =  localhost + "getPostByNameProvince.php";
     public static String getPostByNameDistrict =  localhost + "getPostByNameDistrict.php";
     public static String addRateapp =  localhost + "addRateapp.php";
+   public static String addCarePost =  localhost + "addCarePost.php";
+   public static String addNotifi =  localhost + "addNotifi.php";
+   public static String getNotifi =  localhost + "getNotifi.php";
+   public static String setReadNotifi =  localhost + "setReadNotifi.php";
 }

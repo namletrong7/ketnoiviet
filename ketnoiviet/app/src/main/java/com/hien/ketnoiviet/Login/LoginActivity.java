@@ -45,10 +45,8 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-
     //region Khai báo các controls
     //
-
 
     EditText edittext_email_login,edittext_password_login;
     TextView term_privacy_policy, register_login, reset_password_login;
@@ -215,7 +213,6 @@ public class LoginActivity extends AppCompatActivity {
         twitter_login = findViewById(R.id.twitter_login);
         remember_me = findViewById(R.id.remember_me);
         remember_me.setChecked(true);
-
         SharedPreferences sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE);
         String edittext_phone = sharedPreferences.getString("edittext_phone", "");
         String edittext_password = sharedPreferences.getString("edittext_password", "");

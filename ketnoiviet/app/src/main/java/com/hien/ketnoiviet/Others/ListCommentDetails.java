@@ -276,6 +276,7 @@ public class ListCommentDetails extends AppCompatActivity{
                             arrayCommentDetails.add(new Comment(nameuser, phonenumber, imageuser, content));
                             commentAdapterDetails.notifyDataSetChanged();
                         }
+                        list_comments_details_act.smoothScrollToPosition(arrayCommentDetails.size() - 1);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

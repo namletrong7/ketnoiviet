@@ -1,41 +1,108 @@
 {
   "project_info": {
-    "project_number": "137013968518",
-    "project_id": "nhom1-l02",
-    "storage_bucket": "nhom1-l02.appspot.com"
+    "project_number": "416291791936",
+    "firebase_url": "https://fir-firebase-4af26-default-rtdb.firebaseio.com",
+    "project_id": "fir-firebase-4af26",
+    "storage_bucket": "fir-firebase-4af26.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:137013968518:android:2923c0520f80e1b3245b07",
+        "mobilesdk_app_id": "1:416291791936:android:c29f2f93f19b83b43e6ba5",
         "android_client_info": {
-          "package_name": "com.hien.ketnoiviet"
+          "package_name": "com.example.clockmanager"
         }
       },
       "oauth_client": [
         {
-          "client_id": "137013968518-1ras9sitoc2pi1cpfn6gbdskfkrooa1v.apps.googleusercontent.com",
+          "client_id": "416291791936-ua59fi93emsfn9rshed87qurq7qmvdrj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.hien.ketnoiviet",
+            "package_name": "com.example.clockmanager",
             "certificate_hash": "229a812f95b62e0e91584b8ff34a50ea41c791b5"
           }
         },
         {
-          "client_id": "137013968518-38m4igv7nn6fc08r3p1bqoiqgu23tn99.apps.googleusercontent.com",
+          "client_id": "416291791936-h4dlnc2tq0l6dcr6bajleplj6410vmnp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAqkgVq9msaonyHcS0Rq2dJPCP95TtoiXc"
+          "current_key": "AIzaSyBCP_eap95eLHIR3tM3bae4MLWBay_er80"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "137013968518-38m4igv7nn6fc08r3p1bqoiqgu23tn99.apps.googleusercontent.com",
+              "client_id": "416291791936-h4dlnc2tq0l6dcr6bajleplj6410vmnp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416291791936:android:e14876635ed891223e6ba5",
+        "android_client_info": {
+          "package_name": "com.example.demo_firebase_coban"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416291791936-j476n461bk6ctjqk9dg9b593mng249ho.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.demo_firebase_coban",
+            "certificate_hash": "229a812f95b62e0e91584b8ff34a50ea41c791b5"
+          }
+        },
+        {
+          "client_id": "416291791936-h4dlnc2tq0l6dcr6bajleplj6410vmnp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCP_eap95eLHIR3tM3bae4MLWBay_er80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416291791936-h4dlnc2tq0l6dcr6bajleplj6410vmnp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416291791936:android:eadbb4cd3bc5155b3e6ba5",
+        "android_client_info": {
+          "package_name": "com.hien.ketnoiviet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416291791936-h4dlnc2tq0l6dcr6bajleplj6410vmnp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCP_eap95eLHIR3tM3bae4MLWBay_er80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416291791936-h4dlnc2tq0l6dcr6bajleplj6410vmnp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

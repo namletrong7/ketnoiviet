@@ -8,10 +8,10 @@
 
 	$datachon = mysqli_query($conn, $chon);
 
-	if(mysqli_num_rows($datachon) == 0){
+	if(mysqli_num_rows($datachon) == 0){  // nếu chưa thích bài viết n
 		echo "0";
 	}
-	if(mysqli_num_rows($datachon) == 1){
+	if(mysqli_num_rows($datachon) == 1){  // nếu đã thích bài viết
 		echo "1";
 	}
 ?>

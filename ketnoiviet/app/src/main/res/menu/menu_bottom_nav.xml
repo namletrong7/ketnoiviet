@@ -8,10 +8,10 @@
         android:title="Khám phá"
         android:icon="@drawable/icon_pin_drop">
     </item>
-    <item android:id="@+id/action_here"
-        android:title="Gần đây"
-        android:icon="@drawable/icon_navigation_locate">
-    </item>
+<!--    <item android:id="@+id/action_here"-->
+<!--        android:title="Gần đây"-->
+<!--        android:icon="@drawable/icon_navigation_locate">-->
+<!--    </item>-->
     <item android:id="@+id/action_notify"
         android:title="Thông báo"
         android:icon="@drawable/icon_navbar_bottom_notify">
