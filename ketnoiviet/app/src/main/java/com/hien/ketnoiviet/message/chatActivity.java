@@ -54,7 +54,7 @@ public class chatActivity extends AppCompatActivity {
     ArrayList<Message> ListMessage1;
     String senderRoom, receiverRoom;
     FirebaseDatabase database;
-
+    ValueEventListener valueEventListener ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,31 +91,32 @@ public class chatActivity extends AppCompatActivity {
         });
 
         database = FirebaseDatabase.getInstance();
+        valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listMessage.clear();
+                if (snapshot.exists()) {
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        Message ms = snapshot1.getValue(Message.class);
+                        listMessage.add(ms);
+                    }
+
+                    adapter.notifyDataSetChanged();
+                    recycler_mess.scrollToPosition(listMessage.size() - 1);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
         //---------------------------------------------------------------------------------------
         // lấy dữ liệu tin nhắn từ fire base để đưa ra đoạn chát
         database.getReference().child("chats")
                 .child(senderRoom)
                 .child("Messages")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        listMessage.clear();
-                        if (snapshot.exists()) {
-                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                Message ms = snapshot1.getValue(Message.class);
-                                listMessage.add(ms);
-                            }
-
-                            adapter.notifyDataSetChanged();
-                            recycler_mess.scrollToPosition(listMessage.size() - 1);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                .addValueEventListener(valueEventListener);
 
         String randomKey = database.getReference().push().getKey();
 //------------------------------------------------------------------------------
@@ -215,5 +216,13 @@ public class chatActivity extends AppCompatActivity {
     }
     private int getNotificationId() {
         return (int) new Date().getTime();
+    }
+
+    @Override
+    protected void onDestroy() {
+        database.getReference().removeEventListener(valueEventListener);
+        super.onDestroy();
+        database=null ;
+        valueEventListener=null;
     }
 }

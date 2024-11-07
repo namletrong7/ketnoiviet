@@ -156,7 +156,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_home_user" />
+                        android:src="@drawable/svglocation" />
 
                     <TextView
                         android:id="@+id/hometown_personal_ct"
@@ -177,7 +177,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_face_user" />
+                        android:src="@drawable/svgsex" />
 
                     <TextView
                         android:id="@+id/gender_personal_ct"
@@ -219,7 +219,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_birthday_user" />
+                        android:src="@drawable/svgbirthday" />
 
                     <TextView
                         android:id="@+id/birthday_personal_ct"
@@ -257,7 +257,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_email_user" />
+                        android:src="@drawable/svgemail" />
 
                     <TextView
                         android:id="@+id/email_personal_ct"

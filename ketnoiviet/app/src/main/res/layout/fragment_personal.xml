@@ -390,7 +390,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_weight="8"
-                android:text="Cài đặt"
+                android:text="Cài đặt và bảo mật"
                 android:clickable="true"
                 android:textColor="@drawable/custom_list_item"
                 android:textSize="16sp" />

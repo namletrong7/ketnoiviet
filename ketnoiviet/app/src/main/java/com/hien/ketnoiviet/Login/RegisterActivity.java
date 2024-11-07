@@ -488,7 +488,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void GetData(String phonenb) {
+    private void GetData(String phonenb) {  // check xem sdt dó dã tồn tại hay chưa
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         String duongdan = Server.checkaccount;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, duongdan, new Response.Listener<String>() {

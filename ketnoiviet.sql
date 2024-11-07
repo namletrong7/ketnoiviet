@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 28, 2023 lúc 03:36 PM
+-- Thời gian đã tạo: Th10 07, 2024 lúc 03:36 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.0.28
 
@@ -24,13 +24,37 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `carepost`
+--
+
+CREATE TABLE `carepost` (
+  `idCarePost` int(11) NOT NULL,
+  `idPost` varchar(50) DEFAULT NULL,
+  `idusers` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `carepost`
+--
+
+INSERT INTO `carepost` (`idCarePost`, `idPost`, `idusers`) VALUES
+(39, '237', '65'),
+(40, '235', '65'),
+(41, '237', '66'),
+(42, '237', '67'),
+(43, '238', '67'),
+(44, '240', '67');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `comment`
 --
 
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
   `idpost` varchar(500) NOT NULL,
-  `phoneuser` varchar(500) NOT NULL,
+  `idusers` varchar(500) NOT NULL,
   `content` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -38,20 +62,82 @@ CREATE TABLE `comment` (
 -- Đang đổ dữ liệu cho bảng `comment`
 --
 
-INSERT INTO `comment` (`id`, `idpost`, `phoneuser`, `content`) VALUES
-(429, '202', '0357724245', 'xin chào'),
-(430, '202', '0357724245', 'cnc'),
-(431, '202', '0357724245', 'xjjxc'),
-(432, '201', '0996222549', 'hi'),
-(433, '201', '0996222549', 'xnxnxx'),
-(434, '201', '0996222549', 'xkkxx'),
-(435, '201', '0337356550', 'xin cảm ơn'),
-(436, '197', '0337356550', 'xịn quá đi'),
-(437, '197', '0337356550', 'thật là ngon ha'),
-(438, '206', '0337356550', 'hi'),
-(439, '206', '0337356550', 'xin chào'),
-(440, '206', '0337356550', 'ủa làm gì thế'),
-(441, '214', '0337356550', 'thjfjfjfjfjf');
+INSERT INTO `comment` (`id`, `idpost`, `idusers`, `content`) VALUES
+(483, '237', '65', '  v'),
+(484, '237', '65', 'vv'),
+(485, '237', '65', 'v v'),
+(486, '237', '65', 'v. '),
+(487, '235', '65', ' vvv'),
+(488, '235', '65', '  c qrvvv'),
+(489, '237', '66', 'vvgf'),
+(490, '237', '67', 'xin chàp'),
+(491, '237', '65', 'fkjfjf'),
+(492, '237', '65', 'd'),
+(493, '237', '65', 'ff'),
+(494, '237', '65', 'fff'),
+(495, '237', '65', 'fff'),
+(496, '237', '65', 'fff'),
+(497, '237', '65', 'fff'),
+(498, '237', '65', 'fff'),
+(499, '237', '65', 'vhhh'),
+(500, '238', '67', ' xnxnc'),
+(501, '238', '67', 'bb'),
+(502, '238', '67', 'bbb'),
+(503, '238', '67', ' bb'),
+(504, '238', '67', 'vbb'),
+(505, '238', '67', 'bb '),
+(506, '238', '67', 'mcmcmc'),
+(507, '238', '67', 'mcmcc'),
+(508, '238', '67', 'fmcmmcc'),
+(509, '237', '67', 'gh'),
+(510, '237', '67', 'ggg'),
+(511, '237', '67', 'ggg'),
+(512, '237', '67', 'hhhh'),
+(513, '237', '67', 'vgtt'),
+(514, '237', '67', 'htth'),
+(515, '237', '67', 'vrhg'),
+(516, '237', '67', 'hrgg'),
+(517, '237', '67', 'njtg'),
+(518, '237', '67', 'nhtf'),
+(519, '237', '67', 'gttyyyhhhhhjjjiiiiij\n\n\n'),
+(520, '237', '67', 'ggtaccjncncncmc'),
+(521, '237', '67', 'nhìn xấu wuas'),
+(522, '237', '67', 'mad bạn có biết nó bao nhiêu ko nhỉ'),
+(523, '237', '67', 'jdjfncncc'),
+(524, '237', '67', 'ủa pàm sao toi biết'),
+(525, '237', '67', 'ủa là sao'),
+(526, '237', '67', 'tân hoa hậu xuấu qaus'),
+(527, '237', '67', 'xin chào tân hoa hậu'),
+(528, '240', '67', 'xjncncc'),
+(529, '240', '67', 'jfjf'),
+(530, '237', '67', 'xin chào tân hoa hậu'),
+(531, '237', '67', 'miss grand '),
+(532, '237', '67', 'dkkkdkfkf');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `device`
+--
+
+CREATE TABLE `device` (
+  `idDevice` varchar(50) NOT NULL,
+  `idusers` varchar(50) DEFAULT NULL,
+  `nameDevice` varchar(50) DEFAULT NULL,
+  `timeDateSignIn` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `device`
+--
+
+INSERT INTO `device` (`idDevice`, `idusers`, `nameDevice`, `timeDateSignIn`) VALUES
+('1704334294649galahad', '65', ' Redmi 9', '09:11 04/01/2024 '),
+('1704463661120galahad', '67', ' Redmi 9', '21:07 05/01/2024 '),
+('1705680382296galahad', '67', ' Redmi 9', '23:06 19/01/2024 '),
+('1705680439566galahad', '67', ' Redmi 9', '23:07 19/01/2024 '),
+('1705680450401galahad', '67', ' Redmi 9', '23:07 19/01/2024 '),
+('1705680516326galahad', '67', ' Redmi 9', '23:08 19/01/2024 ');
 
 -- --------------------------------------------------------
 
@@ -798,17 +884,61 @@ CREATE TABLE `followers` (
 --
 
 INSERT INTO `followers` (`id`, `users`, `userfollow`) VALUES
-(94, '0915675216', '337356550'),
-(101, '0337356550', '915675216'),
-(102, '08657004470', '337356550'),
-(104, '0337356550', '865700447'),
-(105, '0337356550', '357724245'),
-(106, '0357724245', '337356550'),
-(107, '0996222549', '337356550'),
-(109, '0357724245', '996222549'),
-(110, '0996222549', '357724245'),
-(111, '0865700447', '337356550'),
-(115, '0337356550', '996222549');
+(121, '65', '66'),
+(122, '67', '65');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `notifi`
+--
+
+CREATE TABLE `notifi` (
+  `idNotifi` varchar(500) NOT NULL,
+  `idPost` varchar(50) DEFAULT NULL,
+  `idusers` varchar(50) DEFAULT NULL,
+  `avatarUser` varchar(50) DEFAULT NULL,
+  `type` varchar(10) DEFAULT NULL,
+  `idSetUp` int(11) NOT NULL,
+  `timeNotifi` varchar(5000) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `notifi`
+--
+
+INSERT INTO `notifi` (`idNotifi`, `idPost`, `idusers`, `avatarUser`, `type`, `idSetUp`, `timeNotifi`) VALUES
+('08hvBDuZCb', '240', '67', '1001974289_1704462066.jpeg', '0', 153, '1704808443343'),
+('0X1EziVK06', '232', '67', '1271718279_1704207982.jpeg', '1', 150, '1704358220311'),
+('3l5k3Wg1E9', '240', '67', '1271718279_1704207982.jpeg', '1', 151, '1704461948729'),
+('3YU4xAlAng', '240', '67', '1001974289_1704462066.jpeg', '0', 152, '1704808440906'),
+('5DAj2xZ4S1', '237', '65', '1293729914_1704202400.jpeg', '1', 135, '1704203063826'),
+('7k7s6pXv9R', '237', '65', '2003519227_1704289990.jpeg', '0', 143, '1704301151356'),
+('8yWpt5Pmc7', '237', '65', '1293729914_1704202400.jpeg', '1', 134, '1704203055253'),
+('afxlPlaWnB', '237', '65', '1293729914_1704202400.jpeg', '0', 132, '1704202885655'),
+('D5IUI8QFKg', '237', '67', '1271718279_1704207982.jpeg', '1', 142, '1704208210222'),
+('D7TNHl1E1x', '237', '65', '1293729914_1704202400.jpeg', '0', 125, '1704202505695'),
+('fxhiYsGCsZ', '237', '65', '1293729914_1704202400.jpeg', '1', 123, '1704202498635'),
+('H53fDLh7dM', '237', '65', '1293729914_1704202400.jpeg', '1', 127, '1704202607032'),
+('hJRYILz3dV', '238', '67', '1271718279_1704207982.jpeg', '0', 145, '1704302607641'),
+('lFMImMIwwB', '237', '65', '1293729914_1704202400.jpeg', '0', 133, '1704202888631'),
+('LGmqqi3LPE', '237', '65', '1293729914_1704202400.jpeg', '1', 130, '1704202881303'),
+('LtlaqYI9cY', '237', '67', '1271718279_1704207982.jpeg', '0', 141, '1704208207484'),
+('lWdxvPfQfL', '237', '66', '831407957_1636091120.jpeg', '0', 139, '1704203095277'),
+('Ojo39ALErr', '238', '67', '1271718279_1704207982.jpeg', '0', 148, '1704356805867'),
+('oWCo1pDjAG', '238', '67', '1271718279_1704207982.jpeg', '0', 146, '1704356799991'),
+('oYkiLPbTOu', '238', '67', '1271718279_1704207982.jpeg', '0', 147, '1704356802655'),
+('P5LZzctoa7', '238', '67', '1271718279_1704207982.jpeg', '0', 149, '1704356808622'),
+('pXQXAeDl2m', '237', '65', '1293729914_1704202400.jpeg', '1', 128, '1704202721572'),
+('QLID5bSpTo', '237', '65', '1293729914_1704202400.jpeg', '1', 129, '1704202723546'),
+('S2dBr6uWCO', '235', '65', '1293729914_1704202400.jpeg', '0', 137, '1704203076320'),
+('szJnsdQLe1', '235', '65', '1293729914_1704202400.jpeg', '1', 138, '1704203077482'),
+('tKi7N35tVN', '235', '65', '1293729914_1704202400.jpeg', '0', 136, '1704203071733'),
+('ueqkXgiNBJ', '237', '65', '1293729914_1704202400.jpeg', '1', 131, '1704202882561'),
+('WPbusxWdOe', '237', '66', '831407957_1636091120.jpeg', '1', 140, '1704203097564'),
+('XROZ5jIGkW', '238', '67', '1271718279_1704207982.jpeg', '1', 144, '1704302589063'),
+('XuCLCpWD8f', '237', '65', '1293729914_1704202400.jpeg', '0', 124, '1704202502461'),
+('yNkXlXZKeN', '237', '65', '1293729914_1704202400.jpeg', '1', 126, '1704202605849');
 
 -- --------------------------------------------------------
 
@@ -829,7 +959,7 @@ CREATE TABLE `post` (
   `image2` varchar(500) NOT NULL,
   `image3` varchar(500) NOT NULL,
   `image4` varchar(500) NOT NULL,
-  `phoneuser` varchar(10) NOT NULL,
+  `idusers` varchar(10) NOT NULL,
   `datepost` varchar(10) NOT NULL,
   `status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -838,32 +968,18 @@ CREATE TABLE `post` (
 -- Đang đổ dữ liệu cho bảng `post`
 --
 
-INSERT INTO `post` (`id`, `nameplace`, `province`, `district`, `ward`, `address`, `description`, `content`, `image1`, `image2`, `image3`, `image4`, `phoneuser`, `datepost`, `status`) VALUES
-(194, 'Hạ Long tươi đẹp', 'Quảng Ninh', 'Hạ Long', '', 'Bãi cháy Hạ Long', 'Cảng thiên nhiên non nước hữu tình', 'Cảnh sắc thiên nhiên vô cùng tươi đẹp, cuộc sống con người chan hoà và vô cùng thân thiện.', '819333603_1696851875.jpeg', '601886660_1696851875.jpeg', '1785848732_1696851875.jpeg', '561606505_1696851875.jpeg', '0337356550', '09/10/2023', 1),
-(195, '', '', '', '', '', '', '', '881754050_1696851912.jpeg', '582187842_1696851912.jpeg', '238331936_1696851912.jpeg', '1203992325_1696851912.jpeg', '', '', 1),
-(196, 'Bắc Ninh quận họ quê tôi', 'Bắc Ninh', 'Quế Võ', 'Đại Xuân', 'Quế Võ, Bắc Ninh', 'Cuộc sống Bắc Ninh', 'Yên bình và thơ mộng như những câu hát quan họ.', '408972973_1696852069.jpeg', '1261800493_1696852069.jpeg', '2078779233_1696852069.jpeg', '531011803_1696852069.jpeg', '0337356550', '09/10/2023', 1),
-(197, 'Cảnh đẹp quê tôi', 'Bắc Giang', 'Lạng Giang', 'Đào Mỹ', 'Lạng giang bắc giang', 'ôi ôi cảnh đẹp thật tuyệt vời Tôi rất muốn đến lần nữa', 'các bạn nên đến địa điểm nào dưới đây là một địa điểm rất là hay', '1526232577_1696852083.jpeg', '1877715396_1696852083.jpeg', '318070608_1696852083.jpeg', '586925462_1696852083.jpeg', '0357724245', '09/10/2023', 1),
-(198, 'Phú Thọ đất Tổ', 'Phú Thọ', 'Việt Trì', 'Nông Trang', 'Nông Trang, Phú Thọ', 'Vùng đất vua hùng', 'Cảnh đẹp  vô cùng', '225653038_1696852301.jpeg', '1466458537_1696852301.jpeg', '269788303_1696852301.jpeg', '2053884453_1696852301.jpeg', '0337356550', '09/10/2023', 1),
-(199, 'biển Vô Cực Thái Bình', 'Ninh Thuận', 'Thuận Nam', 'Phước Nam', 'Thái Giang Thái Thụy Thái Bình', 'cảnh nơi đây thật tuyệt vời', 'các bạn nên đến đây EXO Google', '486406426_1696852373.jpeg', '734908747_1696852373.jpeg', '39540371_1696852373.jpeg', '1803603256_1696852373.jpeg', '0357724245', '09/10/2023', 1),
-(200, 'miền Tây sông nước', 'Vĩnh Long', 'Trà Ôn', 'Hựu Thành', 'Hữu Thành Trà Ôn Vĩnh Long', 'các bạn nên đến đây để trải nghiệm', 'Tôi rất thích nơi này nơi này mọi người nên đến', '1276009220_1696852488.jpeg', '141258592_1696852488.jpeg', '1235335100_1696852488.jpeg', '1646131295_1696852488.jpeg', '0357724245', '09/10/2023', 1),
-(201, 'Thanh Hóa', 'Thanh Hóa', 'Bỉm Sơn', 'Đông Sơn', 'Thanh Hóa', 'Mắm tôm thanh hóa', 'Thanh hóa có chất lượng mắm tôm rất ngon, mùi thơm nồng đượm cùng với hương vị rất đặc biệt.', '676564603_1696852755.jpeg', '2036524409_1696852755.jpeg', '343689507_1696852755.jpeg', '961320182_1696852755.jpeg', '0357724245', '09/10/2023', 1),
-(202, 'Hà Tĩnh', 'Hà Tĩnh', 'Can Lộc', 'Gia Hanh', 'Hà Tĩnh', 'Cảnh sắc Hà Tĩnh', 'Nơi đây sở hữu nhiều cảnh đẹp vừa có núi vừa có biển.Cảnh sách thiên nhiên vô cùng hài hòa.', '312173406_1696853033.jpeg', '865931232_1696853033.jpeg', '1019501010_1696853033.jpeg', '910421048_1696853033.jpeg', '0357724245', '09/10/2023', 1),
-(203, 'Hải Dương', 'Hải Dương', 'Chí Linh', 'Cổ Thành', 'Hải Dương', 'Cảnh sác Hải Dương', 'Hải Dương có cảnh sắc vô cùng nên thơ và trữ tình. Thiên nhiên và khí hậu vô cùng hài hòa. Đồ ăn vô cùng thơm ngon.', '1386199489_1696855819.jpeg', '1529461693_1696855819.jpeg', '365532439_1696855819.jpeg', '1568930216_1696855819.jpeg', '0996222549', '09/10/2023', 1),
-(204, 'Hải Dương', 'Hải Dương', 'Chí Linh', 'Cổ Thành', 'Hải Dương', 'Cảnh sác Hải Dương', 'Hải Dương có cảnh sắc vô cùng nên thơ và trữ tình. Thiên nhiên và khí hậu vô cùng hài hòa. Đồ ăn vô cùng thơm ngon.', '1535283948_1696855820.jpeg', '866911027_1696855820.jpeg', '927101836_1696855820.jpeg', '1390188630_1696855820.jpeg', '0996222549', '09/10/2023', 1),
-(205, 'Buôn làng thân quen', 'Đắk Lắk', 'Buôn Ma Thuột', 'Hòa Khánh', 'Hoà khánh , buôn ma thuột', 'Nơi đây cảnh đẹp vô cùng', 'Hãy đến đây và thưởng thức', '1843242245_1696902763.jpeg', '1371201267_1696902763.jpeg', '600607569_1696902763.jpeg', '191420198_1696902763.jpeg', '0337356550', '10/10/2023', 1),
-(206, 'Cảnh đẹp nơi núi rừng tây nguyên', 'Kon Tum', 'Sa Thầy', 'Sa Bình', 'Sa bình', 'Cảnh đẹp', 'Thân thiện đồ ăn ngon', '1999065751_1696902875.jpeg', '714784784_1696902875.jpeg', '1675195746_1696902875.jpeg', '1194521332_1696902875.jpeg', '0337356550', '10/10/2023', 1),
-(207, 'Núi rừng hùng vĩ', 'Gia Lai', 'Kông Chro', 'Đăk Kơ Ning', 'Xã Đak cơ di', 'Cảnh đẹp núi rừng hùng vĩ', 'Cảnh quá chi là đẹp', '244206625_1696904956.jpeg', '1079174501_1696904956.jpeg', '1036663293_1696904956.jpeg', '25505214_1696904956.jpeg', '', '10/10/2023', 1),
-(208, 'Cảnh đẹp núi rừng', 'Hà Nam', 'Thanh Liêm', 'Liêm Sơn', 'Thanh liêm', 'Đẹp quá', 'Xinh wuas', '796002859_1696905018.jpeg', '444964547_1696905018.jpeg', '1906868513_1696905018.jpeg', '320483256_1696905018.jpeg', '0865700447', '10/10/2023', 1),
-(209, 'Du lịch cùng tôi', 'Bắc Giang', 'Yên Dũng', 'Xuân Phú', 'Xuan phú', 'jdnndf', 'cảnh đẹp qua', '110793660_1696905123.jpeg', '1886431625_1696905123.jpeg', '859762037_1696905123.jpeg', '1184754689_1696905123.jpeg', '0996222549', '10/10/2023', 1),
-(210, 'Thư giãn nơi thần tiên', 'Đồng Nai', 'Long Khánh', 'Bàu Trâm', 'Alo', 'â', 'cc', '1248414577_1696905192.jpeg', '1294133541_1696905192.jpeg', '1835655692_1696905192.jpeg', '247452607_1696905192.jpeg', '0996222549', '10/10/2023', 1),
-(211, 'Trốn thành phố', 'Đồng Tháp', 'Tân Hồng', 'Tân Thành B', 'than hoá', 'đẹp', 'fiifjfjfjfjfjfk', '292451409_1696905325.jpeg', '1114604089_1696905325.jpeg', '939198345_1696905325.jpeg', '689932175_1696905325.jpeg', '', '10/10/2023', 1),
-(212, 'th', 'Bắc Kạn', 'Chợ Mới', 'Hòa Mục', 'dff', 'ffff', 'ff', '552476694_1696905365.jpeg', '1878118534_1696905365.jpeg', '562794741_1696905365.jpeg', '2133831334_1696905365.jpeg', '0865700447', '10/10/2023', 1),
-(213, 'Trốn thành phố cùng tôi', 'Hòa Bình', 'Lạc Sơn', 'Định Cư', 'hàng trạm', 'á', 'djjjfjf', '1777922346_1696905451.jpeg', '293585170_1696905451.jpeg', '908216542_1696905451.jpeg', '708300307_1696905451.jpeg', '', '10/10/2023', 1),
-(214, 'jdjjdfi', 'Hà Giang', 'Mèo Vạc', 'Lũng Chinh', 'ffff', 'fff', 'ff', '531386508_1696905491.jpeg', '1894652130_1696905491.jpeg', '1031948567_1696905491.jpeg', '563862541_1696905491.jpeg', '0337356550', '10/10/2023', 1),
-(215, 'Cùng tôi', 'Bà Rịa Vũng Tàu', 'Long Điền', 'Phước Tỉnh', 'xx', 'ccc', 'cc', '1872611384_1696905578.jpeg', '984350512_1696905578.jpeg', '78827636_1696905578.jpeg', '369279113_1696905578.jpeg', '0996222549', '10/10/2023', 1),
-(216, 'Nơi toi sinh ra', 'Bạc Liêu', 'Phước Long', 'Vĩnh Phú Đông', 'cccc', 'ccc', 'ccc', '1311033626_1696907245.jpeg', '1163815022_1696907245.jpeg', '426420178_1696907245.jpeg', '33580769_1696907245.jpeg', '0996222549', '10/10/2023', 0),
-(217, 'Thanh thanh', 'Hòa Bình', 'Mai Châu', 'Tòng Đậu', 'th', 'xncnnf', 'cnncnf', '17090146_1696937672.jpeg', '1712925493_1696937672.jpeg', '1644693110_1696937672.jpeg', '1037406083_1696937672.jpeg', '0337356550', '10/10/2023', 0),
-(218, 'Núi cao', 'Đồng Tháp', 'Tân Hồng', 'Tân Hộ Cơ', 'xjjxjxx', 'ciccjc', 'ccncncncjc', '529382357_1696938343.jpeg', '1853882453_1696938343.jpeg', '995956143_1696938343.jpeg', '1493849513_1696938343.jpeg', '0337356550', '10/10/2023', 1);
+INSERT INTO `post` (`id`, `nameplace`, `province`, `district`, `ward`, `address`, `description`, `content`, `image1`, `image2`, `image3`, `image4`, `idusers`, `datepost`, `status`) VALUES
+(232, 'Cảnh đẹp quê ta', 'Bạc Liêu', 'Phước Long', 'Phước Long', 'Xã phước long', 'Cảnh đẹp tuyệt vời', 'Hãy đên với vùng đất tuyệt đẹp này\nBạn là ai ai là bạn\nCảnh đẹp lắm nha \nỐi zồi ôi', '1888851530_1704201505.jpeg', '1163389384_1704201505.jpeg', '1573388044_1704201505.jpeg', '1726665158_1704201505.jpeg', '66', '02/01/2024', 1),
+(233, 'Núi đá vôi', 'Bắc Kạn', 'Chợ Mới', 'Hòa Mục', 'ncncc', 'fjjfjf', 'Hãy đên với vùng đất tuyệt đẹp này\nBạn là ai ai là bạn\nCảnh đẹp lắm nha \nỐi zồi ôi', '656673531_1704201563.jpeg', '421816087_1704201563.jpeg', '621400943_1704201563.jpeg', '1124442949_1704201563.jpeg', '66', '02/01/2024', 1),
+(234, 'núi đá vôi', 'Bắc Giang', 'Lục Ngạn', 'Biên Sơn', 'cmmcmc', 'cmcmm', 'Trong mạch văn tự sự, văn miêu tả là những đoạn văn sử dụng ngôn từ để làm nổi bật lên vẻ đẹp, tính chất, đặc điểm của một sự vật, sự việc hoặc một khung cảnh, nhằm gợi lên hình ảnh trong tâm trí của người đọc. Văn miêu tả càng chi tiết, càng sử dụng nhiều thủ pháp nghệ thuật thì tính tượng hình lại càng cao, hình dung trong tâm trí người đọc càng rõ nét, qua đó người đọc có thể hình dung được những gì mà người viết đã thấy, đã quan sát và thể hiện trên bài viết.', '225743537_1704201908.jpeg', '1996601131_1704201908.jpeg', '692906258_1704201908.jpeg', '433375029_1704201908.jpeg', '64', '02/01/2024', 1),
+(235, 'cjcjcj', 'Bắc Kạn', 'Chợ Đồn', 'Bình Trung', 'cmcmc', 'cmcmmf', 'Trong mạch văn tự sự, văn miêu tả là những đoạn văn sử dụng ngôn từ để làm nổi bật lên vẻ đẹp, tính chất, đặc điểm của một sự vật, sự việc hoặc một khung cảnh, nhằm gợi lên hình ảnh trong tâm trí của người đọc. Văn miêu tả càng chi tiết, càng sử dụng nhiều thủ pháp nghệ thuật thì tính tượng hình lại càng cao, hình dung trong tâm trí người đọc càng rõ nét, qua đó người đọc có thể hình dung được những gì mà người viết đã thấy, đã quan sát và thể hiện trên bài viết.', '2051764094_1704201980.jpeg', '1394392309_1704201980.jpeg', '260629722_1704201980.jpeg', '1932344479_1704201980.jpeg', '64', '02/01/2024', 1),
+(236, 'bà rịa vĩng tài', 'Bạc Liêu', 'Hồng Dân', 'Ninh Quới', 'ncncnc', 'cjcjcjc', 'Trong mạch văn tự sự, văn miêu tả là những đoạn văn sử dụng ngôn từ để làm nổi bật lên vẻ đẹp, tính chất, đặc điểm của một sự vật, sự việc hoặc một khung cảnh, nhằm gợi lên hình ảnh trong tâm trí của người đọc. Văn miêu tả càng chi tiết, càng sử dụng nhiều thủ pháp nghệ thuật thì tính tượng hình lại càng cao, hình dung trong tâm trí người đọc càng rõ nét, qua đó người đọc có thể hình dung được những gì mà người viết đã thấy, đã quan sát và thể hiện trên bài viết.', '1217001955_1704202172.jpeg', '2037818207_1704202172.jpeg', '1486322808_1704202172.jpeg', '348278866_1704202172.jpeg', '64', '02/01/2024', 1),
+(237, 'Khoảnh khắc đăng quang của Lee', 'Đắk Nông', 'Gia Nghĩa', 'Nghĩa Thành', 'mxmx', 'xmmxm', 'nxnxnxnxnx', '39351431_1704202480.jpeg', '176616275_1704202480.jpeg', '433803491_1704202480.jpeg', '957107132_1704202480.jpeg', '65', '02/01/2024', 1),
+(238, 'Vietj nam quê hương ta đẹp lắm', 'Bắc Ninh', 'Thuận Thành', 'Gia Đông', 'cjncjc', 'ckcmcjc', 'cmmcmcmcm', '1785636339_1704302578.jpeg', '1141558311_1704302578.jpeg', '1897260332_1704302578.jpeg', '1906441776_1704302578.jpeg', '67', '04/01/2024', 1),
+(239, 'ggg', 'Bà Rịa Vũng Tàu', 'Đất Đỏ', 'Lộc An', 'f', 't', 'g', '1395820540_1704358754.jpeg', '240853875_1704358754.jpeg', '997887690_1704358754.jpeg', '209261160_1704358754.jpeg', '67', '04/01/2024', 1),
+(240, 'ghfb', 'Bạc Liêu', 'Vĩnh Lợi', 'Hưng Thành', 'fff', 'ff', 'gg', '1615050016_1704461789.jpeg', '495034714_1704461789.jpeg', '436482989_1704461789.jpeg', '996508307_1704461789.jpeg', '67', '05/01/2024', 1),
+(241, 'ghdvv', 'Khánh Hòa', 'Trường Sa', 'Trường Sa', 'hf', 'ff', 'Những điểm đến chính của thành phố có thể kể tới tòa nhà Empire State, đảo Ellis, sân khấu kịch Broadway, các bảo tàng như Metropolitan Museum of Art, cùng các địa điểm hấp dẫn khác như Công viên Trung tâm, công viên Washington Square, Trung tâm Rockefeller, Quảng trường Thời đại, tượng Nữ Thần Tự Do. Ảnh: Ibid.\n\n ', '1430670004_1704461864.jpeg', '2069777923_1704461864.jpeg', '1961165315_1704461864.jpeg', '2076661699_1704461864.jpeg', '', '05/01/2024', 1),
+(242, 'vvvvgggg', 'Thanh Hóa', 'Hậu Lộc', 'Triệu Lộc', 'cggf', 'ffft', 'fgfgNhững điểm đến chính của thành phố có thể kể tới tòa nhà Empire State, đảo Ellis, sân khấu kịch Broadway, các bảo tàng như Metropolitan Museum of Art, cùng các địa điểm hấp dẫn khác như Công viên Trung tâm, công viên Washington Square, Trung tâm Rockefeller, Quảng trường Thời đại, tượng Nữ Thần Tự Do. Ảnh: Ibid.\n\n ', '1379405143_1704461923.jpeg', '983857193_1704461923.jpeg', '1554629309_1704461923.jpeg', '1826357944_1704461923.jpeg', '', '05/01/2024', 1);
 
 -- --------------------------------------------------------
 
@@ -972,9 +1088,10 @@ CREATE TABLE `rateapp` (
 --
 
 INSERT INTO `rateapp` (`id`, `phoneuser`, `star`, `content`) VALUES
-(8, '0337356550', '5', '  vvvvv'),
+(8, '0337356550', '3', ' xvccd'),
 (9, '0865700447', '5', 'cccc'),
-(10, '0996222549', '5', 'hhhhhhh');
+(10, '0996222549', '5', 'hhhhhhh'),
+(11, '67', '5', 'fggggg');
 
 -- --------------------------------------------------------
 
@@ -985,7 +1102,7 @@ INSERT INTO `rateapp` (`id`, `phoneuser`, `star`, `content`) VALUES
 CREATE TABLE `react` (
   `id` int(11) NOT NULL,
   `idpost` varchar(500) NOT NULL,
-  `phoneuser` varchar(500) NOT NULL,
+  `idusers` varchar(500) NOT NULL,
   `status` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -993,40 +1110,62 @@ CREATE TABLE `react` (
 -- Đang đổ dữ liệu cho bảng `react`
 --
 
-INSERT INTO `react` (`id`, `idpost`, `phoneuser`, `status`) VALUES
-(119, '158', '0337356550', '1'),
-(120, '167', '0915675216', '1'),
-(122, '166', '0337356550', '1'),
-(123, '156', '0337356550', '1'),
-(124, '167', '0865700447', '1'),
-(125, '167', '0337356550', '1'),
-(126, '176', '0337356550', '1'),
-(127, '176', '0865700447', '1'),
-(128, '177', '0337356550', '1'),
-(129, '177', '0865700447', '1'),
-(130, '177', '0357724245', '1'),
-(131, '161', '0996222549', '1'),
-(132, '181', '0996222549', '1'),
-(134, '166', '0357724245', '1'),
-(135, '176', '0357724245', '1'),
-(137, '181', '0357724245', '1'),
-(138, '182', '0357724245', '1'),
-(139, '180', '0865700447', '1'),
-(140, '171', '0996222549', '1'),
-(141, '167', '0996222549', '1'),
-(142, '185', '0996222549', '1'),
-(144, '180', '0337356550', '1'),
-(146, '180', '0996222549', '1'),
-(147, '156', '0996222549', '1'),
-(149, '192', '0865700447', '1'),
-(150, '193', '0865700447', '1'),
-(152, '202', '0357724245', '1'),
-(153, '201', '0337356550', '1'),
-(154, '197', '0337356550', '1'),
-(155, '201', '0996222549', '1'),
-(156, '206', '0337356550', '1'),
-(158, '214', '0337356550', '1'),
-(159, '218', '0337356550', '1');
+INSERT INTO `react` (`id`, `idpost`, `idusers`, `status`) VALUES
+(169, '230', '63', '1'),
+(170, '231', '63', '1'),
+(171, '230', '62', '1'),
+(176, '237', '65', '1'),
+(177, '235', '65', '1'),
+(178, '237', '66', '1'),
+(179, '237', '67', '1'),
+(180, '238', '67', '1'),
+(181, '232', '67', '1'),
+(182, '240', '67', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `readnotifi`
+--
+
+CREATE TABLE `readnotifi` (
+  `idReadPost` int(11) NOT NULL,
+  `idNotifi` varchar(50) DEFAULT NULL,
+  `idusers` varchar(50) DEFAULT NULL,
+  `hasRead` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `readnotifi`
+--
+
+INSERT INTO `readnotifi` (`idReadPost`, `idNotifi`, `idusers`, `hasRead`) VALUES
+(390, 'afxlPlaWnB', '65', 'false'),
+(391, 'lFMImMIwwB', '65', 'false'),
+(392, '8yWpt5Pmc7', '65', 'true'),
+(393, '5DAj2xZ4S1', '65', 'false'),
+(394, 'tKi7N35tVN', '65', 'false'),
+(395, 'S2dBr6uWCO', '65', 'false'),
+(396, 'szJnsdQLe1', '65', 'true'),
+(397, 'lWdxvPfQfL', '65', 'false'),
+(398, 'lWdxvPfQfL', '66', 'true'),
+(399, 'WPbusxWdOe', '65', 'false'),
+(400, 'WPbusxWdOe', '66', 'true'),
+(401, 'LtlaqYI9cY', '65', 'true'),
+(402, 'LtlaqYI9cY', '66', 'false'),
+(403, 'LtlaqYI9cY', '67', 'true'),
+(404, 'D5IUI8QFKg', '65', 'true'),
+(405, 'D5IUI8QFKg', '66', 'false'),
+(406, 'D5IUI8QFKg', '67', 'true'),
+(407, '7k7s6pXv9R', '65', 'false'),
+(408, '7k7s6pXv9R', '66', 'false'),
+(409, '7k7s6pXv9R', '67', 'true'),
+(410, 'oWCo1pDjAG', '67', 'true'),
+(411, 'oYkiLPbTOu', '67', 'true'),
+(412, 'Ojo39ALErr', '67', 'true'),
+(413, 'P5LZzctoa7', '67', 'true'),
+(414, '3YU4xAlAng', '67', 'false'),
+(415, '08hvBDuZCb', '67', 'false');
 
 -- --------------------------------------------------------
 
@@ -1037,30 +1176,32 @@ INSERT INTO `react` (`id`, `idpost`, `phoneuser`, `status`) VALUES
 CREATE TABLE `users` (
   `idusers` int(11) NOT NULL,
   `nameuser` varchar(200) NOT NULL,
-  `birthday` varchar(20) DEFAULT NULL,
-  `gender` varchar(20) DEFAULT NULL,
+  `birthday` text DEFAULT NULL,
+  `gender` text DEFAULT NULL,
   `imageuser` text DEFAULT NULL,
   `cover` text DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `phonenumber` varchar(11) NOT NULL,
-  `status` text DEFAULT NULL,
+  `email` text DEFAULT NULL,
+  `phonenumber` text NOT NULL,
+  `status` varchar(500) DEFAULT NULL,
   `hometown` text DEFAULT NULL,
   `money` int(11) DEFAULT NULL,
-  `datecreate` varchar(20) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `Role` varchar(255) DEFAULT NULL
+  `datecreate` text NOT NULL,
+  `password` text NOT NULL,
+  `Role` varchar(255) DEFAULT NULL,
+  `isHomeTown` text NOT NULL,
+  `isGender` text NOT NULL,
+  `isBirthday` text NOT NULL,
+  `isEmail` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`idusers`, `nameuser`, `birthday`, `gender`, `imageuser`, `cover`, `email`, `phonenumber`, `status`, `hometown`, `money`, `datecreate`, `password`, `Role`) VALUES
-(31, 'Lê Anh Tiến', '9/9/2017', 'Nam', '2063521704_1696938413.jpeg', '581139697_1694329431.jpeg', 'namletrong7@gmail.com', '0337356550', 'yyy', 'yy', 0, '09/09/2023', 'Letrongnam1@', 'admin'),
-(32, 'Phạm Phương Anh', '10/11/2021', 'Nam', '803938644_1694329644.jpeg', '1380360719_1694245702.jpeg', 'namletrong10@gmail.com', '0865700447', 'Tôi yêu bản thân mình \n', ',,,,', 0, '09/09/2023', 'Letrongnam1@', NULL),
-(33, 'vũ Đình Tuấn Anh', '30/9/2017', 'Nam', '368243983_1696605405.jpeg', 'banner.png', 'namletrong6@gmail.com', '0357724245', 'dffcccc', 'ffff', 0, '30/09/2023', 'Letrongnam1@', NULL),
-(34, 'hantk', '1/10/2016', '', '1802587960_1696138710.jpeg', '1077012359_1696138710.jpeg', 'namletrong6@gmail.com', '0996222549', 'ffff', 'rrrr', 0, '30/09/2023', 'Letrongnam1@', NULL),
-(35, 'anh hùng', '', '', '831407957_1636091120.jpeg', 'banner.png', '', '0911332688', '', '', 0, '03/10/2023', 'Letrongnam1@', NULL);
+INSERT INTO `users` (`idusers`, `nameuser`, `birthday`, `gender`, `imageuser`, `cover`, `email`, `phonenumber`, `status`, `hometown`, `money`, `datecreate`, `password`, `Role`, `isHomeTown`, `isGender`, `isBirthday`, `isEmail`) VALUES
+(65, 'Lê Hoàng Phương', '2/1/2021', 'Nam', '2003519227_1704289990.jpeg', '2033568195_1704202400.jpeg', '119UnHosL1HtirJAxu+z0BjRu0cOhXoZtOzEH0ttStg=', '+eA8KGii6Vyb3Hi2psZlWw==', 'Miss Grand VietNam 2023\nHoa hậu hoà bình việt nam 2023', 'hà nam', 0, '01/01/2024', '0b84c514bae597b046aa8187e9ca4719', NULL, 'false', 'true', 'true', 'false'),
+(66, 'Hantk', '1/1/2021', 'Nam', '2144809070_1704203114.jpeg', 'banner.png', 'X/OP5SV367Vr2e/9s30HjRDFmgQ4RRESpGi6BmNIISY=', '5BJ4fIPiyr7CZVCq0d5aXQ==', 'cnncnc', 'thanh hoá', 0, '01/01/2024', '854512dc42f0a841d561bb6af329157a', NULL, 'true', 'false', 'true', 'false'),
+(67, 'AnhTP', '2/1/2022', 'Nam', '1001974289_1704462066.jpeg', 'banner.png', '3HioFEFUmq13XGaCWZ+HcmQDxvr6j4pwFxj6oQoj5lU=', 'y+8n/ZDnM+dtrnJp0vMgKA==', 'ôi giời ơi', 'hà lội', 0, '02/01/2024', '0b84c514bae597b046aa8187e9ca4719', NULL, 'false', 'false', 'false', 'false');
 
 -- --------------------------------------------------------
 
@@ -12377,10 +12518,22 @@ INSERT INTO `ward` (`id`, `name`, `prefix`, `provinceid`, `districtid`) VALUES
 --
 
 --
+-- Chỉ mục cho bảng `carepost`
+--
+ALTER TABLE `carepost`
+  ADD PRIMARY KEY (`idCarePost`);
+
+--
 -- Chỉ mục cho bảng `comment`
 --
 ALTER TABLE `comment`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `device`
+--
+ALTER TABLE `device`
+  ADD PRIMARY KEY (`idDevice`);
 
 --
 -- Chỉ mục cho bảng `district`
@@ -12394,6 +12547,13 @@ ALTER TABLE `district`
 --
 ALTER TABLE `followers`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `notifi`
+--
+ALTER TABLE `notifi`
+  ADD PRIMARY KEY (`idNotifi`),
+  ADD UNIQUE KEY `idSetUp` (`idSetUp`);
 
 --
 -- Chỉ mục cho bảng `post`
@@ -12420,6 +12580,12 @@ ALTER TABLE `react`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `readnotifi`
+--
+ALTER TABLE `readnotifi`
+  ADD PRIMARY KEY (`idReadPost`);
+
+--
 -- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
@@ -12437,10 +12603,16 @@ ALTER TABLE `ward`
 --
 
 --
+-- AUTO_INCREMENT cho bảng `carepost`
+--
+ALTER TABLE `carepost`
+  MODIFY `idCarePost` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
+--
 -- AUTO_INCREMENT cho bảng `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=442;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=533;
 
 --
 -- AUTO_INCREMENT cho bảng `district`
@@ -12452,13 +12624,19 @@ ALTER TABLE `district`
 -- AUTO_INCREMENT cho bảng `followers`
 --
 ALTER TABLE `followers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+
+--
+-- AUTO_INCREMENT cho bảng `notifi`
+--
+ALTER TABLE `notifi`
+  MODIFY `idSetUp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
 
 --
 -- AUTO_INCREMENT cho bảng `post`
 --
 ALTER TABLE `post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=243;
 
 --
 -- AUTO_INCREMENT cho bảng `province`
@@ -12470,19 +12648,25 @@ ALTER TABLE `province`
 -- AUTO_INCREMENT cho bảng `rateapp`
 --
 ALTER TABLE `rateapp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `react`
 --
 ALTER TABLE `react`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+
+--
+-- AUTO_INCREMENT cho bảng `readnotifi`
+--
+ALTER TABLE `readnotifi`
+  MODIFY `idReadPost` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=416;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT cho bảng `ward`

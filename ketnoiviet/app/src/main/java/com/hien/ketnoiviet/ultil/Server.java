@@ -5,7 +5,7 @@ public class Server {
  // public static String localhost = "https://ketnoiviet123.000webhostapp.com/";
 //public static String localhost = "https://nhom1-l02.000webhostapp.com/";
 // public static String localhost = "http://192.168.22.100:8080/ketnoiviet/"; //hosting local0
-    public static String localhost = "http://192.168.1.107:8080/ketnoiviet/";
+    public static String localhost = "http://192.168.1.109:8080/ketnoiviet/";
     public static String checkaccount = localhost + "checkaccout.php";
     public static String getListUser = localhost + "getListUser.php";
     public static String getListFollow = localhost + "getListFollow.php";
