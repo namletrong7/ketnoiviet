@@ -1,7 +1,8 @@
 <?php 
-	include "connect.php";
+	include "connect.php";include "testAES.php";
 	$target_dir = "users/";
-	$phone_number = $_POST['phone_number'];
+	$password = md5($_POST['password']);
+	$idusers = $_POST['idusers'];
 	$name_user = $_POST['nameuser'];
 	$birth_day = $_POST['birthday'];
 	$gen_der = $_POST['gender'];
@@ -12,7 +13,8 @@
     $target_dir1 = $target_dir."/".$imageStore1;
     file_put_contents($target_dir1, base64_decode($image_user));
 
-	$e_mail = $_POST['email'];
+	// mã hóa thông tin email của người dùng
+    $e_mail = maHoa($password,$_POST['email']);
 	$sta_tus = $_POST['status'];
 	$home_town =$_POST['hometown'];
 
@@ -25,7 +27,7 @@
 				email = '$e_mail', 
 				status = '$sta_tus', 
 				hometown = '$home_town'
-				WHERE phonenumber = '$phone_number' ";
+				WHERE idusers = '$idusers' ";
 	$data 			= mysqli_query($conn, $query);
 	$data = mysqli_query($conn, $query);
 	if($data){

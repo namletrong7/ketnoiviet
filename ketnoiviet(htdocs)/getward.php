@@ -1,8 +1,8 @@
 <?php 
 	include "connect.php";
-	$idhuyen = $_POST['idhuyen'];
+	//$idhuyen = $_POST['idhuyen'];
 	$mangphuong = array();
-	$query = "SELECT * FROM ward WHERE districtid = $idhuyen ";
+	$query = "SELECT * FROM ward  ";
 	$data 			= mysqli_query($conn, $query);
 	while ($row = mysqli_fetch_assoc($data)) {
 		array_push($mangphuong, new Ward(

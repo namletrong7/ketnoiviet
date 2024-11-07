@@ -1,9 +1,11 @@
 <?php 
+  //Done
 	include "connect.php";
-	$phone_number = $_POST['phone_number'];
+	include "testAES.php";
+	$idusers = $_POST['idusers'];
 	
 	$manguser = array();
-	$query = "SELECT * FROM users WHERE phonenumber = $phone_number ";
+	$query = "SELECT * FROM users WHERE idusers = $idusers ";
 	$data 			= mysqli_query($conn, $query);
 	while ($row = mysqli_fetch_assoc($data)) {
 		array_push($manguser, new User(
@@ -13,18 +15,22 @@
 			$row['gender'],
 			$row['imageuser'],
 			$row['cover'],
-			$row['email'],
-			$row['phonenumber'],
+			giaiMa($row['password'],$row['email']),
+			giaiMa($row['password'],$row['phonenumber']),
 			$row['status'],
 			$row['hometown'],
 			$row['money'],
 			$row['datecreate'],
-			$row['password']
+			$row['password'],
+			$row['isHomeTown'],
+			$row['isGender'],
+			$row['isBirthday'],
+			$row['isEmail']
 		));
 	}
 	echo json_encode($manguser);
 	class User{
-		function __construct ($idusers, $nameuser, $birthday, $gender, $imageuser, $cover, $email, $phonenumber, $status, $hometown, $money, $datecreate, $password){
+		function __construct ($idusers, $nameuser, $birthday, $gender, $imageuser, $cover, $email, $phonenumber, $status, $hometown, $money, $datecreate, $password,$isHomeTown,$isGender,$isBirthday,$isEmail){
 			$this->idusers 			=$idusers;
 			$this->nameuser 		=$nameuser;
 			$this->birthday 		=$birthday;
@@ -38,6 +44,10 @@
 			$this->money			=$money;
 			$this->datecreate		=$datecreate;
 			$this->password			=$password;
+			$this->isHomeTown			=$isHomeTown;
+			$this->isGender			=$isGender;
+			$this->isBirthday			=$isBirthday;
+			$this->isEmail			=$isEmail;
 		}
 	}
 ?>

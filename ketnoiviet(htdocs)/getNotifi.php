@@ -3,13 +3,13 @@
 // api lấy dữ liệu thông báo của người dùng 
 	include "connect.php";
 	
-	$phoneUser = $_POST['phoneUser'];   //người nhận dc  thông báo
+	$idusers = $_POST['idusers'];   //người nhận dc  thông báo
 	
 	$mangNotifi = array();
 
 	$query = "SELECT notifi.idNotifi, notifi.idPost, notifi.type, users.nameuser, notifi.avatarUser, readnotifi.hasRead,readnotifi.idReadPost, notifi.timeNotifi FROM notifi,carepost,users,readnotifi WHERE notifi.idPost = carepost.idPost 
-    and carepost.phoneUser = '$phoneUser' and users.phonenumber = notifi.phoneUser 
-    and readnotifi.phoneUser = $phoneUser and readnotifi.idNotifi =  notifi.idNotifi ORDER BY  notifi.idSetUp DESC";
+    and carepost.idusers = '$idusers' and users.idusers = notifi.idusers 
+    and readnotifi.idusers = $idusers and readnotifi.idNotifi =  notifi.idNotifi ORDER BY  notifi.idSetUp DESC";
 
 
 	// thực hiện câu lệnh truy vấn 

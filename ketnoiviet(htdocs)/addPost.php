@@ -1,5 +1,7 @@
 <?php 
 	include "connect.php";
+
+    //Done
 	// lấy các biến được gửi 
 	$nameplace = $_POST['nameplace'];  // lấy địa điểm
 	$province	= $_POST['province'];  // lấy tỉnh
@@ -15,7 +17,7 @@
     $image3	= $_POST['image3'];
     $image4	= $_POST['image4'];
     // lấy thông tin được gửi
-    $phoneuser	= $_POST['phoneuser'];
+    $idusers	= $_POST['idusers'];
 	$datepost	= $_POST['datepost'];
 	$status	= $_POST['status'];
 
@@ -41,7 +43,7 @@
     file_put_contents($target_dir4, base64_decode($image4));
 	// 
     $result = array();
-	$query = "INSERT INTO post(id, nameplace, province, district, ward, address, description, content, image1, image2, image3, image4, phoneuser, datepost, status) VALUES (null,'$nameplace','$province','$district','$ward','$address','$description', '$content', '$imageStore1', '$imageStore2', '$imageStore3', '$imageStore4','$phoneuser','$datepost','$status')";
+	$query = "INSERT INTO post(id, nameplace, province, district, ward, address, description, content, image1, image2, image3, image4, idusers, datepost, status) VALUES (null,'$nameplace','$province','$district','$ward','$address','$description', '$content', '$imageStore1', '$imageStore2', '$imageStore3', '$imageStore4','$idusers','$datepost','$status')";
 	
 	$data = mysqli_query($conn, $query);
 	if($data){

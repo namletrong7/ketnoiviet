@@ -1,18 +1,20 @@
 <?php 
+// Done
   // check tài khoản
 	include "connect.php";
-
-	// nhận dữ liệu được gửi về
+	include "testAES.php";
+	// nhận dữ liệu được gửi về đang còn nguyên chưa bị mã hóa
 	$phonenumber = $_POST['phonenumber'];
-	$manguserinfo = array();
-     // tạo câu lệnh truy vấn kiểm tra xem số điện thoại nhập vào đã tồn tại chưa 
-	$query = "SELECT * FROM users WHERE phonenumber = $phonenumber";
+
+      
+	// check xem đã có sdt nào tồn tại hay chưa bawngfd cách duyệt vòng lặp
+	$query = "SELECT * FROM users ";
 	$data = mysqli_query($conn, $query);
-	$count = mysqli_num_rows($data);
-	if($count>0){   
-		echo "Tontai";
-	} 
-	else{
-		echo "Chuatontai";
+	while ($row = mysqli_fetch_assoc($data)) {
+		$phoneNumberDaGiaiMa = giaiMa($row['password'],$row['phonenumber']);
+		if($phoneNumberDaGiaiMa==$phonenumber){
+			echo "Tontai";
+			break;
+		}
 	}
 ?>
